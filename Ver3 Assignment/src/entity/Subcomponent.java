@@ -8,7 +8,21 @@ public class Subcomponent {
 		this.percentage = percentage;
 		this.name  = name;
 	}
-	
+	//Accessors
 	public double getPercentage() { return percentage;}
 	public String getName() { return name;}
+	
+	
+	
+	//Mutators
+	public void setPercentage(double percentage){
+		this.percentage = percentage;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	
+	
+	
 }
