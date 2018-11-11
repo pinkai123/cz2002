@@ -16,8 +16,11 @@ public class Student extends Person{
 		// Check correct length
 		if (matric.length() != lengthOfMatric)
 			return false;
-		// Check first and last char are alphabet
-		if (!Character.isLetter(matric.charAt(0)) | !Character.isLetter(matric.charAt(lengthOfMatric-1)))
+		// Check last char is an alphabet
+		if (!Character.isLetter(matric.charAt(lengthOfMatric-1)))
+			return false;
+		// Check first char is 'U'
+		if (!(matric.charAt(0) == 'U'))
 			return false;
 		// Check the rest are digits
 		for (int i = 1; i < 8; i ++) {

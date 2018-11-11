@@ -51,6 +51,7 @@ public class MainInput {
 					String email = sc.next();
 					if (!Person.checkValidEmail(email)) {
 						System.err.println("Invalid email format.");
+						break;
 					}
 					
 					// Once All entry are correct, try to add student to database
@@ -59,7 +60,35 @@ public class MainInput {
 					break;
 				// ADD A COURSE
 				case 2:
+					// Get courseID
+					System.out.println("Enter CourseID: ");
+					int courseID = sc.nextInt();
 					
+					// Get courseName
+					System.out.println("Enter CourseName: ");
+					String courseName = sc.next();
+					if (! Course.checkValidCourseName(courseName)) {
+						System.err.println("Invalid course name format.");
+						break;
+					}
+					
+					// Get courseCoordinator
+					System.out.println("Enter Matric Number of Course Coordinator: ");
+					String profMatric = sc.next();
+					if (!Professor.checkProfMatric(profMatric)) {
+						System.err.println("Invalid matric format.");
+						break;
+					}
+					else if (!Professor.checkExisting(profMatric)) {
+						System.err.println("No existing prof with that matric number.");
+					}
+					
+					// Find prof from text file
+					
+					// Get lessonlist
+					
+					
+					// Add course to text file 
 					break;
 				case 3:
 					// Register student for a course (this include registering for Tutorial/Lab classes)

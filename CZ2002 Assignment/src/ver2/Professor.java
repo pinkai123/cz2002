@@ -13,9 +13,12 @@ public class Professor extends Person{
 		// Check correct length
 		if (matric.length() != lengthOfMatric)
 			return false;
-		// Check first and last char are alphabet
-		if (!Character.isLetter(matric.charAt(0)) | !Character.isLetter(matric.charAt(lengthOfMatric-1)))
-			return false;
+		// Check last char is an alphabet
+			if (!Character.isLetter(matric.charAt(lengthOfMatric-1)))
+				return false;
+		// Check first char is 'P'
+			if (!(matric.charAt(0) == 'P'))
+				return false;
 		// Check the rest are digits
 		for (int i = 1; i < 8; i ++) {
 			if (!Character.isDigit(matric.charAt(i)))
@@ -23,8 +26,19 @@ public class Professor extends Person{
 		}
 		return true;
 	}
-	
+
+	// Others
 	public boolean checkExisting() {
+		return false;
+	}
+	
+	public static boolean checkExisting(String matric) {
 		return true;
 	}
+	
+	public static Professor getFromText(String matric) {
+		Person newProf;
+		
+	}
+
 }
