@@ -33,7 +33,7 @@ public class Course {
 	
 	
 	
-	//ACCESSORS MY NIGGA
+	//Accessors
 	public String getCourseID(){
 		return courseID;
 	}
@@ -53,7 +53,7 @@ public class Course {
 		return lessonList;
 	}
 	
-	//MUTATORS MY NIGGA
+	//Mutators
 	
 	public void setCourseID(String courseID){
 		this.courseID = courseID;
