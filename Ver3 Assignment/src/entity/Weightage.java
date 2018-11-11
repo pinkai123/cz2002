@@ -52,7 +52,7 @@ public class Weightage {
 	public void setMainPercentage(double mainPercentage){
 		this.mainPercentage = mainPercentage;
 	}
-	public void setCoursework(double courseworkPercentage){
+	public void setCourseworkPercentage(double courseworkPercentage){
 		this.courseworkPercentage = courseworkPercentage;
 	}
 	public void setHaveSub(){
