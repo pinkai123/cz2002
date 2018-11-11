@@ -30,4 +30,51 @@ public class Course {
 		else
 			return false;
 	}
+	
+	
+	
+	//ACCESSORS MY NIGGA
+	public String getCourseID(){
+		return courseID;
+	}
+	public String getCourseName(){
+		return courseName;
+	}
+	public Professor getCourseCoordinator(){
+		return courseCoordinator;
+	}
+	public Weightage getCourseWeightage{
+		return courseWeightage;
+	}
+	public ArrayList<Student> getStudentList{
+		return studentList;
+	}
+	public ArrayList<Lesson> getLessonList{
+		return lessonList;
+	}
+	
+	//MUTATORS MY NIGGA
+	
+	public void setCourseID(String courseID){
+		this.courseID = courseID;
+	}
+	public void setCourseName(String courseName){
+		this.courseName = courseName;
+	}
+	public void setCourseCoordinator(Professor courseCoordinator){
+		this.courseCoordinator = courseCoordinator;
+	}
+	public void setCourseWeightage(Weightage courseWeightage){
+		this.courseWeightage = courseWeightage;
+	}
+	public void setStudentList(ArrayList<Student> studentList){
+		this.studentList = studentList;
+	}
+	public void setLessonList(ArrayList<Lesson> lessonList){
+		this.lessonList = lessonList;
+	}
+	
+	
+	
+	
 }
