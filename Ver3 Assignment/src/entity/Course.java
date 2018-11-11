@@ -43,13 +43,13 @@ public class Course {
 	public Professor getCourseCoordinator(){
 		return courseCoordinator;
 	}
-	public Weightage getCourseWeightage{
+	public Weightage getCourseWeightage(){
 		return courseWeightage;
 	}
-	public ArrayList<Student> getStudentList{
+	public ArrayList<Student> getStudentList(){
 		return studentList;
 	}
-	public ArrayList<Lesson> getLessonList{
+	public ArrayList<Lesson> getLessonList(){
 		return lessonList;
 	}
 	
