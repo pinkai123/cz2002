@@ -1,0 +1,9 @@
+John|U1234567J|john005@e.ntu.edu.sg
+Tom|U3580567J|tom005@e.ntu.edu.sg
+Mary|U1594327J|mary005@e.ntu.edu.sg
+Sam|U7862597J|sam005@e.ntu.edu.sg
+Jerv|U123124|khffff@e.ntu.edu.sg
+Jerv|U123124|khffff@e.ntu.edu.sg
+Jerv|U123124|khffff@e.ntu.edu.sg
+Jerv|U123124|khffff@e.ntu.edu.sg
+Jerv|U123124|khffff@e.ntu.edu.sg
