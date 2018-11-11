@@ -40,5 +40,27 @@ public class Professor extends Person{
 		Person newProf;
 		
 	}
+		// Assessor
+	public String getName() {
+		return name;
+	}
+	public String getMatric() {
+		return matric;
+	}
+	public String getEmail() {
+		return email;
+	}
+	
+	// Mutator
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setMatric(String matric) {
+		this.matric = matric;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 
 }
