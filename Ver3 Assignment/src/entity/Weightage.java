@@ -13,9 +13,7 @@ public class Weightage {
 		this.haveSub = haveSub;
 	}
 	
-	public void setSubcomponent(String name, double percentage) {
-		subcomponent [noSub] = new Subcomponent(name,percentage);
-		noSub++;
+	
 	}
 	public static boolean verificationOverall(int mainPercentage, int courseworkPercentage) {
 		if(mainPercentage + courseworkPercentage == 100) {
@@ -41,9 +39,30 @@ public class Weightage {
 		}
 		return true;
 	}
-	
+	//Accessors
 	public double getMainPercentage(){return mainPercentage;}
 	public double getCourseworkPercentage(){return courseworkPercentage;}
 	public int getNoSub(){return noSub;}
 	public boolean getHaveSub() { return haveSub;}
+	public Subcomponent[] getSubcomponent(){
+		return subcomponent;
+	}
+	
+	//Mutators
+	public void setMainPercentage(double mainPercentage){
+		this.mainPercentage = mainPercentage;
+	}
+	public void setCoursework(double courseworkPercentage){
+		this.courseworkPercentage = courseworkPercentage;
+	}
+	public void setHaveSub(){
+		this.haveSub = TRUE;
+	}
+	public void setSubcomponent(String name, double percentage) {
+		subcomponent [noSub] = new Subcomponent(name,percentage);
+		noSub++;
+	}
+	
+
+	
 }
