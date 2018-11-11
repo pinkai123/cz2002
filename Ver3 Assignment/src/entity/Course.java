@@ -1,7 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
-hello
+
 public class Course {
 	private String courseID;
 	private String courseName;
