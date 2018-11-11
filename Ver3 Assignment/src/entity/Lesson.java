@@ -9,7 +9,7 @@ public class Lesson {
 	private int vacancy;
 	// It is small case L
 	private TypeOfLesson lType;
-	ArrayList<Student> studentList = new ArrayList<Student>();
+	private ArrayList<Student> studentList = new ArrayList<Student>();
 	
 	public Lesson(int lessonIndex, int vacancy, TypeOfLesson lType) {
 		this.lessonIndex = lessonIndex;

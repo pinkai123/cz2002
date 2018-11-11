@@ -5,7 +5,7 @@ public class Weightage {
 	private double courseworkPercentage;
 	private boolean haveSub;
 	private int noSub = 0;
-	Subcomponent[] subcomponent = new Subcomponent[10];
+	private Subcomponent[] subcomponent = new Subcomponent[10];
 
 	public Weightage(double mainPercentage, double courseworkPercentage,boolean haveSub){
 		this.mainPercentage = mainPercentage;

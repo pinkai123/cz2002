@@ -18,6 +18,11 @@ public class Course {
 		this.lessonList = lessonList; 
 	}
 	
+	//
+	public Lesson[] getLessons() {
+		return Lessons;
+	}
+	
 	// Validation
 	public static boolean checkValidCourseName(String courseName) {
 		if (courseName.length() == 6)
