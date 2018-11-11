@@ -41,6 +41,9 @@ public class Lesson {
 	public void decrementVacancy() {
 		vacancy --;
 	}
+	public void incrementVacancy(){
+		vacancy++;
+	}
 	public void addStudentToLesson(Student newStudent) {
 		studentList.add(newStudent);
 	}
