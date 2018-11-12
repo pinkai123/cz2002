@@ -36,10 +36,10 @@ public class Professor extends Person{
 		return true;
 	}
 	
-	public static Professor getFromText(String matric) {
-		Person newProf;
-		
-	}
+//	public static Professor getFromText(String matric) {
+//		Person newProf;
+//		
+//	}
 	
 	
 

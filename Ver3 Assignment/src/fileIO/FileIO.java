@@ -13,8 +13,8 @@ public abstract class FileIO {
 	public abstract void saveData(String filename, List al) throws IOException;
   
 	/** Write fixed content to the given file. */
-  public static void write(String fileName, List data) throws IOException  {
-    PrintWriter out = new PrintWriter(new FileWriter(fileName));
+  public static void write(String fileName, List data, boolean write) throws IOException  {
+    PrintWriter out = new PrintWriter(new FileWriter(fileName,write));
 
     try {
 		for (int i =0; i < data.size() ; i++) {

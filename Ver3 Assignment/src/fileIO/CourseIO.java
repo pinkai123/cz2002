@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
 
 import entity.Weightage;
 import entity.Lesson;
+import entity.Lesson.TypeOfLesson;
 import entity.Student;
 import entity.Course;
 import entity.Person;
@@ -30,10 +31,10 @@ public class CourseIO extends FileIO {
 				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
 				String topic  = star.nextToken().trim();
 				if(topic.equals("Course")) {
-					alr.add(star.nextToken().trim());
-				}
-				else if(topic.equals("vacancy")) {
-					alr.add(Integer.parseInt(star.nextToken().trim()));
+					alr.add(Integer.parseInt(star.nextToken().trim()));// CourseID
+					alr.add(star.nextToken().trim());// COurseName
+					alr.add(star.nextToken().trim());// COurseCoordinator
+					alr.add(Integer.parseInt(star.nextToken().trim())); // Vacancy
 				}
 				else if(topic.equals("Student")) {
 					while(star.hasMoreTokens()) {
@@ -58,12 +59,14 @@ public class CourseIO extends FileIO {
 				while(star.hasMoreTokens()) {
 					String  Lesson = star.nextToken().trim();
 					String[] Lesson1 = Lesson.split(",");// first token
-					String name = Lesson1[0].trim();
-					int vacancy = Integer.parseInt(Lesson1[1].trim());
-					Lesson Tut = new Lesson(vacancy,name);
+					int Index = Integer.parseInt(Lesson1[0].trim());
+					int Vacancy = Integer.parseInt(Lesson1[1].trim());
+					String Type = Lesson1[2].trim();
+					Lesson Tut = new Lesson(Index, Vacancy ,TypeOfLesson.valueOf(Type));
 					int i1 =2;
 					while(Lesson1[i1] != null) {
-						Tut.addStudent(Lesson1[i].trim());
+						//get student class from name
+						Tut.addStudentToLesson(Lesson1[i1].trim());
 						i1++;
 					}
 					TutLab.add(Tut);
@@ -87,19 +90,19 @@ public void saveData(String filename, List al) throws IOException {
         		StringBuilder st =  new StringBuilder() ;
         		st.append("Course");
 				st.append(SEPARATOR);
-				st.append(course.getName());
-				alw.add(st.toString()) ;
-				
-				st.setLength(0);
-				st.append("vacancy");
+				st.append(course.getCourseID());
+				st.append(SEPARATOR);
+				st.append(course.getCourseName());
+				st.append(SEPARATOR);
+				st.append(course.getCourseCoordinator());
 				st.append(SEPARATOR);
 				st.append(course.getVacancy());
 				alw.add(st.toString()) ;
 				
 				st.setLength(0);
 				st.append("Student");
-				ArrayList<String> Student = new ArrayList();
-				Student = course.getStudent();
+				ArrayList<Student> Student = new ArrayList();
+				Student = course.getStudentList();
 				for(int j = 0; j <Student.size();j++) {
 					st.append(SEPARATOR);
 					st.append(Student.get(j));
@@ -107,38 +110,38 @@ public void saveData(String filename, List al) throws IOException {
 				alw.add(st.toString()) ;
 				
 				st.setLength(0);
+				Weightage Weightage = course.getCourseWeightage(); 
 				st.append("Weightage");
 				st.append(SEPARATOR);
-				st.append(course.getMainPercentage());
+				st.append(Weightage.getMainPercentage());
 				st.append(SEPARATOR);
-				st.append(course.getCourseWorkPercentage());
+				st.append(Weightage.getCourseworkPercentage());
 				st.append(SEPARATOR);
-				st.append(course.getHaveSub());
-				ArrayList<String> TutLab = new ArrayList();
-				TutLab = course.getSubcomponent();
-				for(int j = 0; j <TutLab.size();j++) {
-					 Subcomponent TutLab1 = TutLab[j];
+				st.append(Weightage.getHaveSub());
+				Subcomponent[] Subcomponents = new Subcomponent[10];
+				Subcomponents = Weightage.getSubcomponent();
+				for(int j = 0; j <Subcomponents.length;j++) {
+					 Subcomponent TutLab = Subcomponents[j];
 					 st.append(SEPARATOR);
-					 st.append(TutLab1.getName());
+					 st.append(TutLab.getName());
 					 st.append(SEPARATOR);
-					 st.append(TutLab1.getPercentage());
+					 st.append(TutLab.getPercentage());
 				}
 				alw.add(st.toString()) ;
 				
 				st.setLength(0);
 				ArrayList<Lesson> Lessons = new ArrayList();
-				Lessons = course.getLessons();
+				Lessons = course.getLessonList();
 				Lesson Lesson = null;
 				st.append("Lesson");
 				st.append(SEPARATOR);
 				for(int k = 0; k< Lessons.size();k++) {
-				Lesson = Lessons[k];
+				Lesson = Lessons.get(k);
 				st.append(Lesson.getLessonIndex());
 				st.append(",");
 				st.append(Lesson.getVacancy());
 				st.append(",");
 				st.append(Lesson.getLType());
-				ArrayList<Student> Student = new ArrayList();
 				Student = Lesson.getStudentList();
 				for(int j = 0; j <Student.size();j++) {
 					st.append(",");
@@ -147,6 +150,6 @@ public void saveData(String filename, List al) throws IOException {
 				}
 				alw.add(st.toString()) ;
 			}
-			overwrite(filename,alw);
+			write(filename,alw,false);
 	}
 }

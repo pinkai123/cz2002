@@ -108,7 +108,6 @@ public class MainInput {
 								System.out.println("====Lecture=====\n"
 										+ "Enter vacancy for whole course/lecture: ");
 								int vacancy = sc.nextInt();
-								if 
 								break;
 							default:
 								System.out.println("Invalid option");
@@ -143,8 +142,8 @@ public class MainInput {
 				// Print student transcript
 				case 10:
 					System.out.println("Enter Student Matric: ");
-					String matric = sc.next();
-					if (!Student.checkStudentMatric(matric)) {
+					String matric1 = sc.next();
+					if (!Student.checkStudentMatric(matric1)) {
 						System.err.println("Invalid matric format.");
 						break;
 					}

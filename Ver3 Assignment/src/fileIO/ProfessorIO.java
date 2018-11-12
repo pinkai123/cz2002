@@ -29,10 +29,10 @@ public class ProfessorIO extends FileIO {
 				Professor prof = null;
 				while(star.hasMoreTokens()) {
 					String  name = star.nextToken().trim();	// first token
-					String  email = star.nextToken().trim();	// second token
-					int  contact = Integer.parseInt(star.nextToken().trim()); // third token
+					String  matric = star.nextToken().trim();	// second token
+					String  email = star.nextToken().trim(); // third token
 					// create Professor object from file data
-					prof = new Professor(name, email,contact);
+					prof = new Professor(name, matric, email);
 				}
 				// add to Professors list
 				alr.add(prof) ;
@@ -49,11 +49,11 @@ public void saveData(String filename, List al) throws IOException {
 				StringBuilder st =  new StringBuilder() ;
 				st.append(prof.getName().trim());
 				st.append(SEPARATOR);
-				st.append(prof.getEmail().trim());
+				st.append(prof.getMatric().trim());
 				st.append(SEPARATOR);
-				st.append(prof.getContact());
+				st.append(prof.getEmail());
 				alw.add(st.toString()) ;
 			}
-			write(filename,alw);
+			write(filename,alw,true);
 	}
 }

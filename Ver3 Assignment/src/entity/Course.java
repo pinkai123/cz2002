@@ -6,22 +6,21 @@ public class Course {
 	private String courseID;
 	private String courseName;
 	private Professor courseCoordinator;
+	private int Vacancy;
 	private ArrayList<Student> studentList = new ArrayList<Student>();
 	private Weightage courseWeightage;
 	private ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
 	
 	// Constructor 
-	public Course(String courseID, String courseName, Professor courseCoordinator, ArrayList<Lesson> lessonList) {
+	public Course(String courseID, String courseName, Professor courseCoordinator,int Vacancy, ArrayList<Lesson> lessonList) {
 		this.courseID = courseID;
 		this.courseName = courseName;
 		this.courseCoordinator = courseCoordinator;
+		this.Vacancy = Vacancy;
 		this.lessonList = lessonList; 
 	}
 	
 	//
-	public Lesson[] getLessons() {
-		return Lessons;
-	}
 	
 	// Validation
 	public static boolean checkValidCourseName(String courseName) {
@@ -42,6 +41,9 @@ public class Course {
 	}
 	public Professor getCourseCoordinator(){
 		return courseCoordinator;
+	}
+	public int getVacancy() {
+		return Vacancy;
 	}
 	public Weightage getCourseWeightage(){
 		return courseWeightage;

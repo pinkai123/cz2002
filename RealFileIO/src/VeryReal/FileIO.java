@@ -22,7 +22,7 @@ public abstract class FileIO {
   
 	/** Write fixed content to the given file. */
   public static void write(String fileName, List data) throws IOException  {
-    PrintWriter out = new PrintWriter(new FileWriter(fileName));
+    PrintWriter out = new PrintWriter(new FileWriter(fileName,true));
 
     try {
 		for (int i =0; i < data.size() ; i++) {

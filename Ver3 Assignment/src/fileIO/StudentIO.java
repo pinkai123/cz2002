@@ -48,6 +48,6 @@ public void saveData(String filename, List al) throws IOException {
 				st.append(Student.getEmail());
 				alw.add(st.toString()) ;
 			}
-			write(filename,alw);
+			write(filename,alw,true);
 	}
 }
