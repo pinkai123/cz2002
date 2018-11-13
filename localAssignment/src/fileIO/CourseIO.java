@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import entity.*;
+import entity.Lesson.TypeOfLesson;
 import others.*;
 
 public class CourseIO extends FileIO {
@@ -16,25 +17,35 @@ public class CourseIO extends FileIO {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
 		ArrayList alr = new ArrayList() ;// to store TutLabs data
+		
 		ArrayList Students = new ArrayList(); // to store name of student taking the course
 		Weightage weightage = null;
 		ArrayList TutLab = new ArrayList();
+		Course Course =  null;
+		int Vacancy = 0, step = 0;
+		String CourseName = null,CourseID = null;
+		Professor CourseCoordinator = null;
 
         for (int i = 0 ; i < stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);
 				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
 				String topic  = star.nextToken().trim();
 				if(topic.equals("Course")) {
-					alr.add(Integer.parseInt(star.nextToken().trim()));// CourseID
-					alr.add(star.nextToken().trim());// COurseName
-					alr.add(star.nextToken().trim());// COurseCoordinator
-					alr.add(Integer.parseInt(star.nextToken().trim())); // Vacancy
+					CourseID = star.nextToken().trim();// CourseID
+					CourseName = star.nextToken().trim();// COurseName
+					String Prof = star.nextToken().trim();// COurseCoordinator
+					String[] CourseCoordinatorInfo = Prof.split(",");
+					CourseCoordinator = new Professor(CourseCoordinatorInfo[0].trim(),CourseCoordinatorInfo[1].trim(),CourseCoordinatorInfo[2].trim());
+					Vacancy = Integer.parseInt(star.nextToken().trim()); // Vacancy
+					step++;
 				}
 				else if(topic.equals("Student")) {
 					while(star.hasMoreTokens()) {
 						String Name = star.nextToken().trim();
 						Students.add(Name);
 					}
+					Students = Translation.StringtoObject(Students);
+					step++;
 				}
 				else if(topic.equals("Weightage")) {
 					double mainPercentage = Double.parseDouble(star.nextToken().trim());
@@ -46,32 +57,42 @@ public class CourseIO extends FileIO {
 						double Percentage = Double.parseDouble(star.nextToken().trim());
 						weightage.setSubcomponent(Name,Percentage);
 					}
-
+					step++;
 				}
 				else if(topic.equals("Lesson")) {
 				// get individual 'fields' of the string separated by SEPARATOR
-				while(star.hasMoreTokens()) {
-					String  Lesson = star.nextToken().trim();
-					String[] Lesson1 = Lesson.split(",");// first token
-					int Index = Integer.parseInt(Lesson1[0].trim());
-					int Vacancy = Integer.parseInt(Lesson1[1].trim());
-					String Type = Lesson1[2].trim();
-					Lesson Tut = new Lesson(Index, Vacancy ,TypeOfLesson.valueOf(Type));
-					int i1 =2;
-					while(Lesson1[i1] != null) {
-						//get student class from name
-						Tut.addStudentToLesson(Lesson1[i1].trim());
-						i1++;
+					while(star.hasMoreTokens()) {
+						String  Lesson = star.nextToken().trim();
+						String[] Lesson1 = Lesson.split(",");// first token
+						int Index = Integer.parseInt(Lesson1[0].trim());
+						int VacancyLesson = Integer.parseInt(Lesson1[1].trim());
+						String Type = Lesson1[2].trim();
+						Lesson Tut = new Lesson(Index, VacancyLesson ,TypeOfLesson.valueOf(Type));
+						ArrayList<String> StudentName = new ArrayList();
+						ArrayList<Student> StudentInfo = new ArrayList();
+						for(int i1 =2; i1<Lesson1.length;i1++) {
+							//get student class from name	
+							StudentName.add(Lesson1[i1].trim());
+							//System.out.println(i1 + "!");
+						}
+						StudentInfo = Translation.StringtoObject(StudentName);
+						Tut.addStudentList(StudentInfo);
+						TutLab.add(Tut);
 					}
-					TutLab.add(Tut);
+					step++;
 				}
-				// add to TutLabs list
-
+				if( step == 4) {
+					Course = new Course(CourseID,CourseName,CourseCoordinator,Vacancy,TutLab);
+					if(weightage!= null) {
+						Course.setCourseWeightage(weightage);
+					}
+					if(Students != null) {
+						Course.setStudentList(Students);
+					}
+					alr.add(Course);
+					step = 0;
 				}
-			}
-			alr.add(Students);
-			alr.add(weightage);
-			alr.add(TutLab) ;
+        }
 			return alr ;
 	}
 
@@ -88,7 +109,12 @@ public void saveData(ArrayList al) throws IOException {
 				st.append(SEPARATOR);
 				st.append(course.getCourseName());
 				st.append(SEPARATOR);
-				st.append(course.getCourseCoordinator());
+				Professor Professor = course.getCourseCoordinator();
+				st.append(Professor.getName());
+				st.append(",");
+				st.append(Professor.getMatric());
+				st.append(",");
+				st.append(Professor.getEmail());
 				st.append(SEPARATOR);
 				st.append(course.getVacancy());
 				alw.add(st.toString()) ;
@@ -99,7 +125,7 @@ public void saveData(ArrayList al) throws IOException {
 				Student = course.getStudentList();
 				for(int j = 0; j <Student.size();j++) {
 					st.append(SEPARATOR);
-					st.append(Student.get(j));
+					st.append(Student.get(j).getName());
 				}
 				alw.add(st.toString()) ;
 				
@@ -112,10 +138,11 @@ public void saveData(ArrayList al) throws IOException {
 				st.append(Weightage.getCourseworkPercentage());
 				st.append(SEPARATOR);
 				st.append(Weightage.getHaveSub());
-				Subcomponent[] Subcomponents = new Subcomponent[10];
+				ArrayList<Subcomponent> Subcomponents = new ArrayList();
 				Subcomponents = Weightage.getSubcomponent();
-				for(int j = 0; j <Subcomponents.length;j++) {
-					 Subcomponent TutLab = Subcomponents[j];
+				System.out.println(Subcomponents.size());
+				for(int j = 0; j <Subcomponents.size();j++) {
+					 Subcomponent TutLab = Subcomponents.get(j);
 					 st.append(SEPARATOR);
 					 st.append(TutLab.getName());
 					 st.append(SEPARATOR);
@@ -130,17 +157,18 @@ public void saveData(ArrayList al) throws IOException {
 				st.append("Lesson");
 				st.append(SEPARATOR);
 				for(int k = 0; k< Lessons.size();k++) {
-				Lesson = Lessons.get(k);
-				st.append(Lesson.getLessonIndex());
-				st.append(",");
-				st.append(Lesson.getVacancy());
-				st.append(",");
-				st.append(Lesson.getLType());
-				Student = Lesson.getStudentList();
-				for(int j = 0; j <Student.size();j++) {
+					Lesson = Lessons.get(k);
+					st.append(Lesson.getLessonIndex());
 					st.append(",");
-					st.append(Student.get(j).getName());
-				}
+					st.append(Lesson.getVacancy());
+					st.append(",");
+					st.append(Lesson.getLType());
+					Student = Lesson.getStudentList();
+					for(int j = 0; j <Student.size();j++) {
+						st.append(",");
+						st.append(Student.get(j).getName());
+					}
+					st.append(SEPARATOR);
 				}
 				alw.add(st.toString()) ;
 			}
