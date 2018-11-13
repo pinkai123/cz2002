@@ -49,4 +49,7 @@ public class Lesson {
 	public void addStudentToLesson(Student newStudent) {
 		studentList.add(newStudent);
 	}
+	public void addStudentList(ArrayList StudentList) {
+		this.studentList = StudentList;
+	}
 }
