@@ -81,10 +81,14 @@ public class MainInput {
 				// ADD A COURSE
 				case 2:
 					// Get courseID
+					String courseID;
+					String courseName;
+					String profMatric;
+					
 					do {
 						cFlag = 1;
 						System.out.println("Enter CourseID: ");
-						String courseID = sc.next();
+						courseID = sc.next();
 						if (!Course.validCourseID(courseID)) {
 							cFlag = 0;
 							System.out.println("Invalid courseID format. (Valid E.g. CZ2002)");
@@ -94,17 +98,24 @@ public class MainInput {
 					// Get courseName
 					cFlag = 1;
 					System.out.println("Enter Course Name: ");
-					String courseName = sc.next();
+					courseName = sc.next();
 					
 					// Get courseCoordinator
-					System.out.println("Enter Matric Number of Course Coordinator: ");
-					String profMatric = sc.next();
-					if (!Professor.checkProfMatric(profMatric)) {
-						System.out.println("Invalid matric format.");
+					do {
+						cFlag = 1;
+						System.out.println("Enter Matric Number of Course Coordinator: ");
+						profMatric = sc.next();
+						if (!Professor.checkProfMatric(profMatric)) {
+							System.out.println("Invalid matric format.");
+							cFlag = 0;
+						}
+					} while (cFlag == 0);
+					
+					// Check whether prof and course exist in database
+					boolean checkCourse = mainC.checkCourse(courseID,profMatric);
+					if (!checkCourse) {
 						break;
 					}
-					
-					// Find prof from text file
 					
 					// Get lessonlist
 					do {
@@ -157,6 +168,7 @@ public class MainInput {
 					break;
 				// Print student transcript
 				case 10:
+					// Get Student matric and check format 
 					do {
 						cFlag = 1;
 						System.out.println("Enter Student Matric: ");
@@ -167,7 +179,7 @@ public class MainInput {
 						}
 					} while(cFlag == 0);
 					
-					
+					mainC.printStudentTranscript(matric);					
 					break;
 				case 11:
 					// Quit application

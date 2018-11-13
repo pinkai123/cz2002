@@ -1,6 +1,9 @@
 package entity;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import fileIO.*;
 import others.*;
 
@@ -28,6 +31,27 @@ public class Course {
 			return true;
 		else
 			return false;
+	}
+	
+	public static boolean checkExisting(String courseID){
+		// Retrieve all Course Objects in text file
+		ArrayList courseList = new ArrayList();
+		FileIO retrieve = new CourseIO();
+		try {
+			courseList = retrieve.readData();
+		} catch(IOException e) {
+			return false;
+		}
+		
+		// Check whether matric number is existing
+		for (int i = 0; i < courseList.size(); i ++) {
+			Course temp = (Course) courseList.get(i);
+			if (Objects.equals(courseID, temp.courseID)) {
+				return true;
+			}
+		}
+		return false;
+		
 	}
 	
 	//Accessors

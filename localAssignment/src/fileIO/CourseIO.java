@@ -9,11 +9,12 @@ import others.*;
 
 public class CourseIO extends FileIO {
 	public static final String SEPARATOR = "|";
+	protected String fileName = "course.txt";
 
     // an example of reading
-	public ArrayList readData(String filename) throws IOException {
+	public ArrayList readData() throws IOException {
 		// read String from text file
-		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList stringArray = (ArrayList)read(fileName);
 		ArrayList alr = new ArrayList() ;// to store TutLabs data
 		ArrayList Students = new ArrayList(); // to store name of student taking the course
 		Weightage weightage = null;
@@ -75,7 +76,7 @@ public class CourseIO extends FileIO {
 	}
 
   // an example of saving
-public void saveData(String filename, ArrayList al) throws IOException {
+public void saveData(ArrayList al) throws IOException {
 		ArrayList alw = new ArrayList() ;// to store TutLabs data
 
         for (int i = 0 ; i < al.size() ; i++) {
@@ -143,6 +144,6 @@ public void saveData(String filename, ArrayList al) throws IOException {
 				}
 				alw.add(st.toString()) ;
 			}
-			write(filename,alw,false);
+			write(fileName,alw,false);
 	}
 }

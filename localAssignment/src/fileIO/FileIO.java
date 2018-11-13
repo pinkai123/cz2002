@@ -8,11 +8,12 @@ import others.*;
 
 public abstract class FileIO {
 	public static final String SEPARATOR = "|";
+	protected String fileName;
 	
 	// an example of reading
-	public abstract ArrayList readData(String filename) throws IOException ;
+	public abstract ArrayList readData() throws IOException ;
 	// an example of saving
-	public abstract void saveData(String filename, ArrayList al) throws IOException;
+	public abstract void saveData(ArrayList al) throws IOException;
   
 	/** Write fixed content to the given file. */
 	public static void write(String fileName, ArrayList data, boolean write) throws IOException  {

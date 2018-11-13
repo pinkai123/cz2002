@@ -39,7 +39,7 @@ public class Student extends Person{
 		ArrayList studentList = new ArrayList();
 		FileIO retrieve = new StudentIO();
 		try {
-			studentList = retrieve.readData("student.txt");
+			studentList = retrieve.readData();
 		} catch(IOException e) {
 			return false;
 		}
@@ -47,6 +47,7 @@ public class Student extends Person{
 		// Check whether matric number is existing
 		for (int i = 0; i < studentList.size(); i ++) {
 			Person temp = (Student) studentList.get(i);
+			System.out.println(temp.getMatric());
 			if (Objects.equals(matricNum, temp.getMatric())) {
 				return true;
 			}

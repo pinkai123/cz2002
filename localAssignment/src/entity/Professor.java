@@ -35,16 +35,12 @@ public class Professor extends Person{
 	}
 
 	// Others
-	public boolean checkExisting() {
-		return false;
-	}
-	
 	public static boolean checkExisting(String matricNum){
 		// Retrieve all Student Objects in text file
 		ArrayList studentList = new ArrayList();
 		FileIO retrieve = new StudentIO();
 		try {
-			studentList = retrieve.readData("professor.txt");
+			studentList = retrieve.readData();
 		} catch(IOException e) {
 			return false;
 		}

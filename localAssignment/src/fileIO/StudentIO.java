@@ -10,11 +10,12 @@ import others.*;
 
 public class StudentIO extends FileIO {
 	public static final String SEPARATOR = "|";
+	protected String fileName = "student.txt";
 
     // an example of reading
-	public ArrayList readData(String filename) throws IOException {
+	public ArrayList readData() throws IOException {
 		// read String from text file
-		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList stringArray = (ArrayList)read(fileName);
 		ArrayList alr = new ArrayList() ;// to store Students data
 
         for (int i = 0 ; i < stringArray.size() ; i++) {
@@ -36,7 +37,7 @@ public class StudentIO extends FileIO {
 	}
 
 	// an example of saving
-	public void saveData(String filename, ArrayList al) throws IOException {
+	public void saveData(ArrayList al) throws IOException {
 		ArrayList alw = new ArrayList() ;// to store Students data
 
         for (int i = 0 ; i < al.size() ; i++) {
@@ -49,6 +50,6 @@ public class StudentIO extends FileIO {
 				st.append(Student.getEmail());
 				alw.add(st.toString()) ;
 			}
-			write(filename,alw,true);
+			write(fileName,alw,true);
 	}
 }
