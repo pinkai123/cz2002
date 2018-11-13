@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 import fileIO.*;
 import others.*;
 
@@ -8,7 +10,7 @@ public class Weightage {
 	private double courseworkPercentage;
 	private boolean haveSub;
 	private int noSub = 0;
-	private Subcomponent[] subcomponent = new Subcomponent[10];
+	private ArrayList<Subcomponent> subcomponent = new ArrayList();
 
 	public Weightage(double mainPercentage, double courseworkPercentage,boolean haveSub){
 		this.mainPercentage = mainPercentage;
@@ -23,19 +25,19 @@ public class Weightage {
 		else 
 			return false;
 	}
-	public static boolean verificationSubcomponentPercentage(Subcomponent[] subcomponent, int noSub) {
+	public static boolean verificationSubcomponentPercentage(ArrayList subcomponent, int noSub) {
 		int percentage = 0;
 		for(int i = 0; i < noSub;i++) {
-			percentage += subcomponent[i].getPercentage();
+			percentage += ((Subcomponent) subcomponent.get(i)).getPercentage();
 			}
 		if(percentage!= 100)
 			return false;
 		return true;
 	}
 	
-	public static boolean verificationSubcomponentName(Subcomponent[] subcomponent, String name, int noSub) {
+	public static boolean verificationSubcomponentName(ArrayList subcomponent, String name, int noSub) {
 		for(int i= 0;i<noSub;i++) {
-			if((subcomponent[i].getName()).equals(name))
+			if((((Subcomponent) subcomponent.get(i)).getName()).equals(name))
 				return false;
 		}
 		return true;
@@ -45,7 +47,7 @@ public class Weightage {
 	public double getCourseworkPercentage(){return courseworkPercentage;}
 	public int getNoSub(){return noSub;}
 	public boolean getHaveSub() { return haveSub;}
-	public Subcomponent[] getSubcomponent(){
+	public ArrayList getSubcomponent(){
 		return subcomponent;
 	}
 	
@@ -60,7 +62,8 @@ public class Weightage {
 		this.haveSub = true;
 	}
 	public void setSubcomponent(String name, double percentage) {
-		subcomponent [noSub] = new Subcomponent(name,percentage);
+		Subcomponent Subcomponent = new Subcomponent(name,percentage);
+		subcomponent.add(Subcomponent);
 		noSub++;
 	}
 	
