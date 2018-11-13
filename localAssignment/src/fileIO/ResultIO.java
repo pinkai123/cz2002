@@ -46,9 +46,9 @@ public void saveData(ArrayList al) throws IOException {
         for (int i = 0 ; i < al.size() ; i++) {
         		Result Result = (Result)al.get(i);
         		StringBuilder st =  new StringBuilder() ;
-				st.append(Result.getCourse());
+				st.append(Result.getCourse().getCourseID());
 				st.append(SEPARATOR);
-				st.append(Result.getStudent());
+				st.append(Result.getStudent().getName());
 				st.append(SEPARATOR);
 				ArrayList<Grade> Grades = new ArrayList();
 				Grades = Result.getAllGrades();
