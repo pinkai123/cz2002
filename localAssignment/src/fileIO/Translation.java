@@ -3,10 +3,11 @@ package fileIO;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import entity.Course;
 import entity.Student;
 
 public class Translation {
-	public static  ArrayList StringtoObject(ArrayList StudentName) throws IOException {
+	public static  ArrayList StringtoStudents(ArrayList StudentName) throws IOException {
 		ArrayList<Student> Cohort  = new ArrayList();
 		ArrayList<Student> Final  = new ArrayList();
 		FileIO IO = new StudentIO();
@@ -20,5 +21,25 @@ public class Translation {
 			}
 		}
 		return Final;
+	}
+	public static Course StringtoCourse(String Course) throws IOException {
+		ArrayList<Course> Courses  = new ArrayList();
+		FileIO IO = new CourseIO();
+		Courses = IO.readData();
+		for( int i = 0; i<Courses.size();i++) {
+				if(Courses.get(i).getCourseID().equals(Course))
+					return Courses.get(i);
+		}
+		return null;
+	}
+	public static Student StringtoStudent(String StudentName) throws IOException {
+		ArrayList<Student> Students  = new ArrayList();
+		FileIO IO = new StudentIO();
+		Students = IO.readData();
+		for( int i = 0; i<Students.size();i++) {
+				if(Students.get(i).getName().equals(StudentName))
+					return Students.get(i);
+		}
+		return null;
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import entity.Course;
 import entity.Grade;
 import entity.Result;
 import entity.Student;
@@ -21,8 +22,10 @@ public class ResultIO extends FileIO {
         for (int i = 0 ; i < stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);
 				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
-					String CourseID = star.nextToken().trim();
-					String StudentName = star.nextToken().trim();
+					String CourseIDInfo = star.nextToken().trim();
+					Course CourseID = Translation.StringtoCourse(CourseIDInfo);
+					String StudentNameInfo = star.nextToken().trim();
+					Student StudentName =Translation.StringtoStudent(StudentNameInfo);
 					Result Result = new Result(CourseID,StudentName);
 					while(star.hasMoreTokens()) {
 						String[] GradeInfo = star.nextToken().trim().split(",");

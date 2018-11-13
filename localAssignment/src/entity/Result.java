@@ -5,12 +5,12 @@ import fileIO.*;
 import others.*;
 
 public class Result {
-	private String Course;
-	private String Student;
+	private Course Course;
+	private Student Student;
 	private ArrayList<Grade> AllGrades = new ArrayList();
 	
 	//Constructor
-	public Result(String Course, String Student) {
+	public Result(Course Course, Student Student) {
 		this.Course =Course;
 		this.Student = Student;
 	}
@@ -21,10 +21,10 @@ public class Result {
 	}
 	
 	//Accessor
-	public String getCourse() {
+	public Course getCourse() {
 		return Course;
 	}
-	public String getStudent() {
+	public Student getStudent() {
 		return Student;
 	}
 	public ArrayList getAllGrades() {

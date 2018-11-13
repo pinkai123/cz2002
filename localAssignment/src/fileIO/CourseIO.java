@@ -44,7 +44,7 @@ public class CourseIO extends FileIO {
 						String Name = star.nextToken().trim();
 						Students.add(Name);
 					}
-					Students = Translation.StringtoObject(Students);
+					Students = Translation.StringtoStudents(Students);
 					step++;
 				}
 				else if(topic.equals("Weightage")) {
@@ -75,7 +75,7 @@ public class CourseIO extends FileIO {
 							StudentName.add(Lesson1[i1].trim());
 							//System.out.println(i1 + "!");
 						}
-						StudentInfo = Translation.StringtoObject(StudentName);
+						StudentInfo = Translation.StringtoStudents(StudentName);
 						Tut.addStudentList(StudentInfo);
 						TutLab.add(Tut);
 					}
