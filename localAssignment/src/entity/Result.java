@@ -24,7 +24,7 @@ public class Result {
 	public String getCourse() {
 		return Course;
 	}
-	public String Student() {
+	public String getStudent() {
 		return Student;
 	}
 	public ArrayList getAllGrades() {

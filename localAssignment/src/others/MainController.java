@@ -18,7 +18,6 @@ public class MainController {
 		
 		// Check whether existing 
 		boolean isExisting = Student.checkExisting(matric);
-		System.out.println(x);
 		if (isExisting) {
 			System.out.println("Student already exists.");
 			return;

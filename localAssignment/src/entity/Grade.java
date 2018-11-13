@@ -5,7 +5,7 @@ import others.*;
 
 public class Grade {
 	private String type;
-	private String name;
+	private String name = null;
 	private double mark = 0;
 	
 	//Constructor
