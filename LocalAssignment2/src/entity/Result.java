@@ -1,11 +1,9 @@
 package entity;
 
 import java.util.ArrayList;
-
-import entity.Grade.TypeOfResult;
+import java.util.Objects;
 
 public class Result {
-	
 	private Course course;
 	private Student student;
 	// Grade objects as attributes (Composition)
@@ -17,7 +15,7 @@ public class Result {
 		this.student = student;
 	}
 	
-	public void addGrade(TypeOfResult type, String name, double mark) {
+	public void addGrade(Grade.gradeType type, String name, double mark) {
 		Grade grade = new Grade(type,name,mark);
 		allGrades.add(grade);
 	}
@@ -31,5 +29,12 @@ public class Result {
 	}
 	public ArrayList<Grade> getAllGrades() {
 		return allGrades;
+	}
+	
+	public boolean isStudent(String matric) {
+		if (Objects.equals(matric, student.getMatric()))
+			return true;
+		else
+			return false;
 	}
 }

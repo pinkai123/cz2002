@@ -34,6 +34,9 @@ public class Lesson {
 	public ArrayList<Student> getStudentList() {
 		return studentList;
 	}
+	public int getTotalSize() {
+		return totalSize;
+	}
 	
 	// Mutator
 	// Assume that index, lesson type cannot change

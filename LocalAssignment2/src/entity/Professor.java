@@ -1,11 +1,6 @@
 package entity;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import fileIO.*;
-import others.*;
 
 public class Professor extends Person{
 	// Student and result objects as attributes (Association)
@@ -51,27 +46,5 @@ public class Professor extends Person{
 				return false;
 		}
 		return true;
-	}
-	
-	// Check whether a prof exists in the database
-	public static boolean isExisting(String matricNum){
-		// Retrieve all Professor Objects in text file
-		ArrayList profList = new ArrayList();
-		FileIO retrieve = new ProfessorIO();
-		try {
-			profList = retrieve.readData();
-		} catch(IOException e) {
-			return false;
-		}
-		
-		// Check whether matric number is existing
-		for (int i = 0; i < profList.size(); i ++) {
-			Person temp = (Professor) profList.get(i);
-			if (Objects.equals(matricNum, temp.getMatric())) {
-				return true;
-			}
-		}
-		return false;
-		
 	}
 }

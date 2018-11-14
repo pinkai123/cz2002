@@ -1,11 +1,6 @@
 package entity;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import fileIO.*;
-import others.*;
 
 public class Student extends Person{
 	// Course and result objects as attributes (Association)
@@ -25,15 +20,14 @@ public class Student extends Person{
 		return resultList;
 	}
 	
+	// Mutator
 	public void addCourse(Course newCourse) {
 		courseRegistered.add(newCourse);
 	}
 	public void addResult(Result newResult) {
 		resultList.add(newResult);
 	}
-
 	
-	// Other Methods
 	// Check naming convention of STUDENT matric is valid
 	public static boolean isValidMatric(String matric) {
 		int lengthOfMatric = 9;
@@ -52,27 +46,5 @@ public class Student extends Person{
 				return false;
 		}
 		return true;
-	}
-	
-	// Check whether a student exists in the database
-	public static boolean isExisting(String matricNum){
-		// Retrieve all Student Objects in text file
-		ArrayList<Student> studentList = new ArrayList<Student>();
-		FileIO retrieve = new StudentIO();
-		try {
-			studentList = retrieve.readData();
-		} catch(IOException e) {
-			return false;
-		}
-		
-		// Check whether matric number is existing
-		for (int i = 0; i < studentList.size(); i ++) {
-			Person temp = (Student) studentList.get(i);
-			if (Objects.equals(matricNum, temp.getMatric())) {
-				return true;
-			}
-		}
-		return false;
-		
 	}
 }

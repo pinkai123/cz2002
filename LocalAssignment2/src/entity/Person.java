@@ -34,7 +34,7 @@ public class Person {
 		this.email = email;
 	}
 	
-	// Other Methods
+	
 	// Check naming convention of name is valid
 	public static boolean isValidName(String name) {
 		// Check string only contain alphabet, "/", " "
@@ -58,5 +58,4 @@ public class Person {
 		else
 			return false;
 	}
-	
 }

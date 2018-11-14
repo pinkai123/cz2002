@@ -1,11 +1,7 @@
 package entity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import fileIO.CourseIO;
-import fileIO.FileIO;
 
 public class Course {
 	private String courseID;
@@ -27,15 +23,6 @@ public class Course {
 		this.courseID = courseID;
 		this.courseName = courseName;
 		this.vacancy = vacancy;
-	}
-	
-	// Remove later /////////////////////////////////////////////
-	public Course(String courseID, String courseName, Professor courseCoordinator, int vacancy, ArrayList<Lesson> TutLab) {
-		this.courseCoordinator = courseCoordinator;
-		this.courseID = courseID;
-		this.courseName = courseName;
-		this.vacancy = vacancy;
-		this.lessonList = TutLab;
 	}
 	
 	// Accessor
@@ -65,12 +52,6 @@ public class Course {
 	}
 	
 	// Mutators
-	public void addWeightage(double mainPercentage, double courseworkPercentage,boolean haveSub) {
-		courseWeightage = new Weightage(mainPercentage, courseworkPercentage, haveSub);
-	}
-	public void addSubcomponent(String name, double percentage) {
-		courseWeightage.setSubcomponent(name, percentage);
-	}
 	public void setCourseID(String courseID){
 		this.courseID = courseID;
 	}
@@ -92,8 +73,12 @@ public class Course {
 	public void decrementVacancy() {
 		this.vacancy--;
 	}
-	
-	// Add courseWeight //////////////////////////////////
+	public void addWeightage(double mainPercentage, double courseworkPercentage,boolean haveSub) {
+		courseWeightage = new Weightage(mainPercentage, courseworkPercentage, haveSub);
+	}
+	public void addSubcomponent(String name, double percentage) {
+		courseWeightage.setSubcomponent(name, percentage);
+	}
 	public void addLesson(int lessonIndex, int vac, Lesson.TypeOfLesson lType) {
 		Lesson newLesson = new Lesson(lessonIndex,vac,lType);
 		lessonList.add(newLesson);
@@ -120,28 +105,6 @@ public class Course {
 		return true;
 	}
 	
-	// Check whether course exists in database
-	public static boolean isExisting(String courseID){
-		// Retrieve all Course Objects in text file
-		ArrayList courseList = new ArrayList();
-		FileIO retrieve = new CourseIO();
-		try {
-			courseList = retrieve.readData();
-		} catch(IOException e) {
-			return false;
-		}
-		
-		// Check whether matric number is existing
-		for (int i = 0; i < courseList.size(); i ++) {
-			Course temp = (Course) courseList.get(i);
-			if (Objects.equals(courseID, temp.courseID)) {
-				return true;
-			}
-		}
-		return false;
-		
-	}
-	
 	// Check whether student in course
 	public boolean studentInCourse(Student S) {
 		if (studentList.contains(S))
@@ -151,17 +114,18 @@ public class Course {
 	}
 	
 	// Count the num of tut and lab
+	// NumofTut, NumOfLab
 	public int[] countLessons() {
-		int[] count = {0,0};
+		int[] countL = {0,0};
 		if (lessonList.isEmpty())
-			return count;
+			return countL;
 		for (int i = 0; i < lessonList.size(); i ++) {
 			if (lessonList.get(i).getLType() == Lesson.TypeOfLesson.LAB)
-				count[1] ++;
+				countL[1] ++;
 			else
-				count[0] ++;
+				countL[0] ++;
 		}
-		return count;
+		return countL;
 	}
 	
 	// Get Lesson object with lesson index

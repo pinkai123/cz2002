@@ -1,6 +1,9 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
+import entity.Grade.gradeType;
 
 public class Weightage {
 	private double mainPercentage;
@@ -41,6 +44,7 @@ public class Weightage {
 		}
 		return true;
 	}
+	
 	// Accessors
 	public double getMainPercentage(){return mainPercentage;}
 	public double getCourseworkPercentage(){return courseworkPercentage;}
@@ -64,5 +68,103 @@ public class Weightage {
 		Subcomponent Subcomponent = new Subcomponent(name,percentage);
 		subcomponent.add(Subcomponent);
 		noSub++;
+	}
+	
+	public void printMarks(Result r) {
+		double percentage;
+		
+		for (int j = 0; j < r.getAllGrades().size(); j++) {
+			Grade g = r.getAllGrades().get(j);
+			if (Objects.equals(gradeType.EXAM, g.getType())) {
+				percentage = mainPercentage;
+				System.out.println(g.getType() + " " + g.getName() + " " + g.getMark() + " " + percentage);
+			}
+			else if (Objects.equals(gradeType.COURSEWORK, g.getType())) {
+				for (int i = 0; i < subcomponent.size(); i ++) {
+					percentage = subcomponent.get(i).getPercentage();
+					if (Objects.equals(subcomponent.get(i).getName(), g.getName())) {
+						System.out.println(g.getType() + " " + g.getName() + " " + g.getMark() + " " + percentage);
+					}
+				}
+			}
+		}
+	}
+	
+	public String calculateGrade(double marks) {
+		if (marks >= 90)
+			return "A+";
+		else if (marks >= 85)
+			return "A";
+		else if (marks >= 80)
+			return "A-";
+		else if (marks >= 75)
+			return "B+";
+		else if (marks >= 70)
+			return "B";
+		else if (marks >= 65)
+			return "B-";
+		else if (marks >= 60)
+			return "C+";
+		else if (marks >= 55)
+			return "C";
+		else if (marks >= 50)
+			return "C-";
+		else if (marks >= 45)
+			return "D+";
+		else if (marks >= 40)
+			return "D";
+		else
+			return "F";
+	}
+	
+	public double calculateMark(Result r) {
+		// For its weightage, get grade
+		double overallMark = 0;
+		for (int i = 0; i < r.getAllGrades().size(); i ++) {
+			Grade tempG = r.getAllGrades().get(i);
+			// Exam
+			if (Objects.equals(gradeType.EXAM, tempG.getType())) {
+				overallMark += mainPercentage * tempG.getMark();
+			}
+			// Sub components
+			else if (Objects.equals(gradeType.COURSEWORK, tempG.getType())) {
+				for (int j = 0; j < subcomponent.size(); j ++) {
+					double percentage = subcomponent.get(j).getPercentage();
+					if (Objects.equals(subcomponent.get(j).getName(), tempG.getName())) {
+						overallMark += percentage * tempG.getMark();
+						continue;
+					}
+				}
+			}
+		}
+		return overallMark;
+	}
+	
+	public double getExamMark(Result r) {
+		for (int i = 0; i < r.getAllGrades().size(); i ++) {
+			Grade tempG = r.getAllGrades().get(i);
+			// Exam
+			if (Objects.equals(gradeType.EXAM, tempG.getType())) {
+				return tempG.getMark();
+			}
+		}
+		return 0;
+	}
+	
+	public double getCourseworkMark(Result r) {
+		double courseworkMark = 0;
+		for (int i = 0; i < r.getAllGrades().size(); i++) {
+			Grade tempG = r.getAllGrades().get(i);
+			if (Objects.equals(gradeType.COURSEWORK, tempG.getType())) {
+				for (int j = 0; j < subcomponent.size(); j ++) {
+					double percentage = subcomponent.get(j).getPercentage();
+					if (Objects.equals(subcomponent.get(j).getName(), tempG.getName())) {
+						courseworkMark += percentage * tempG.getMark();
+						continue;
+					}
+				}
+			}
+		}
+		return (courseworkMark);
 	}
 }
