@@ -509,6 +509,10 @@ public class MainInput {
 				if(result == null) {
 					result = new Result(tempCourse,student1);
 				}
+				else {
+					System.out.println("Result has already been inserted");
+					break;
+				}
 				//mark verification
 				System.out.println("Enter exam mark(0 -1): ");
 				double mark = sc.nextDouble();
@@ -516,6 +520,7 @@ public class MainInput {
 					System.out.println("Enter Mark from 0 - 1");
 					break;
 				}
+				// ADD TO DATABASE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 				result.addGrade(gradeType.EXAM, null, mark);
 				System.out.println("Exam mark added succesfully");
 				break;
@@ -537,16 +542,14 @@ public class MainInput {
 					cFlag = 1;
 					System.out.println("Choose Type of course statistics: \n"
 							+ "1. Print all Students\n"
-							+ "2. Get min, max and average\n"
-							+ "3. Print results of student who scored a certain range");
+							+ "2. Get min, max and average\n");
 					printStatType = sc.nextInt();
 					switch (printStatType) {
 						case 1:
-							
+							MainController.printCourseAnalysis(courseID);
 							break;
 						case 2:
-							break;
-						case 3:
+							MainController.printCourseStat(courseID);
 							break;
 						default:
 							cFlag = 0;

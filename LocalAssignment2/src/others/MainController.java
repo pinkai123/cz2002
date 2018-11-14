@@ -195,26 +195,80 @@ public class MainController {
 			return;
 		}
 		System.out.println("Student, Overall percentage, Exam percentage, Coursework percentage");
+		System.out.println("-1 means incomplete data");
 		// Get results for course and weightage
 		ArrayList<Result> resultList = tempC.getResultList();
 		Weightage w = tempC.getCourseWeightage();
-		for (int i = 0; i < resultList.size(); i++) {
-			double overallMark = w.calculateMark(resultList.get(i));
-			double examMark = w.getExamMark(resultList.get(i));
-			double courseworkMark = w.getCourseworkMark(resultList.get(i));
-			String matric = resultList.get(i).getStudent().getMatric();
-			System.out.println(matric + " " + overallMark + " " + examMark + " " + courseworkMark);
+		for (int i = 0; i < resultList.size(); i ++) {
+			Result tempR = resultList.get(i);
+			double courseworkMark = w.getCourseworkMark(tempR);
+			double examMark = w.getExamMark(tempR);
+			double overallMark = w.getOverallMark(examMark, courseworkMark);
+			
+			String matric = tempR.getStudent().getMatric();
+			System.out.println("Matric: " + matric + " Overall: " + overallMark + "% Exam: " + examMark + "% Coursework: " + courseworkMark
+					+ "%");
 		}
 	}
 	
-	public void printCourseAnalysis(String courseID) {
+	public static void printCourseAnalysis(String courseID) {
 		// Get course object
 		Course tempC = Database.getCourse(courseID);
 		if (tempC == null) {
 			System.out.println("Course does not exist");
 			return;
 		}
+		Weightage w = tempC.getCourseWeightage();
+		
+		// {overall, exam, coursework}
+		double[] min = {101,101,101};
+		double[] max = {-1,-1,-1};
+		double[] total = {-1,-1,-1};
+		int[] count = {0,0,0};
+		
 		// For each overall, exam only, coursework only
+		ArrayList<Result> resultList = tempC.getResultList();
+		for (int i = 0; i < resultList.size(); i ++) {
+			Result tempR = resultList.get(i);
+			double courseworkMark = w.getCourseworkMark(tempR);
+			double examMark = w.getExamMark(tempR);
+			double overallMark = w.getOverallMark(examMark, courseworkMark);
+			
+			if (courseworkMark != -1) {
+				if (courseworkMark < min[2])
+					min[2] = courseworkMark;
+				if (courseworkMark > max[2])
+					max[2] = courseworkMark;
+				count[2] ++;
+				total[2] += courseworkMark;
+			}
+			
+			if (examMark != -1) {
+				if (examMark < min[1])
+					min[1] = examMark;
+				if (examMark > max[1])
+					max[1] = examMark;
+				count[1] ++;
+				total[1] += examMark;
+			}
+			
+			if (overallMark != -1) {
+				if (overallMark < min[0])
+					min[0] = overallMark;
+				if (overallMark > max[0])
+					max[0] = overallMark;
+				count[0] ++;
+				total[0] += overallMark;
+			}
+		}
+		
+		// Print results
+		System.out.println(tempC.getCourseID());
+		System.out.println("overall, exam, coursework");
+		System.out.println("Min: " + min[0] + " ," + min[1] + " ," + min[2]);
+		System.out.println("Max: " + max[0] + " ," + max[1] + " ," + max[2]);
+		double[] average = {total[0]/count[0],total[1]/count[1],total[2]/count[2]};
+		System.out.println("Average: " + average[0] + " ," + average[1] + " ," + average[2]);
 		
 	}
 	
@@ -249,12 +303,20 @@ public class MainController {
 			Result tempR = sResult.get(j);
 			Course tempC = tempR.getCourse();
 			Weightage w = tempC.getCourseWeightage();
-			double overallMark = w.calculateMark(tempR);
-			String overallGrade = w.calculateGrade(overallMark);
+			
+			double examMark = w.getExamMark(tempR);
+			double courseworkMark = w.getCourseworkMark(tempR);
+			double overallMark = w.getOverallMark(examMark, courseworkMark);
+			if (overallMark == -1) {
+				System.out.println("Unable to generate mark as courseworkMark or examMark is incomplete.");
+			}
+			else {
+				String overallGrade = w.calculateGrade(overallMark);
+				System.out.println("Overall Marks: " + overallMark + ", Overall Grade; " + overallGrade);
+			}
 			
 			// Print results
 			System.out.println(sResult.get(j).getCourse().getCourseID());
-			System.out.println("Overall Marks: " + overallMark + ", Overall Grade; " + overallGrade);
 			w.printMarks(tempR);
 			
 		}

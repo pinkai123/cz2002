@@ -117,27 +117,11 @@ public class Weightage {
 			return "F";
 	}
 	
-	public double calculateMark(Result r) {
-		// For its weightage, get grade
-		double overallMark = 0;
-		for (int i = 0; i < r.getAllGrades().size(); i ++) {
-			Grade tempG = r.getAllGrades().get(i);
-			// Exam
-			if (Objects.equals(gradeType.EXAM, tempG.getType())) {
-				overallMark += mainPercentage * tempG.getMark();
-			}
-			// Sub components
-			else if (Objects.equals(gradeType.COURSEWORK, tempG.getType())) {
-				for (int j = 0; j < subcomponent.size(); j ++) {
-					double percentage = subcomponent.get(j).getPercentage();
-					if (Objects.equals(subcomponent.get(j).getName(), tempG.getName())) {
-						overallMark += percentage * tempG.getMark();
-						continue;
-					}
-				}
-			}
+	public double getOverallMark(double examMark, double courseworkMark) {
+		if (examMark == -1 | courseworkMark == -1) {
+			return -1;
 		}
-		return overallMark;
+		return (examMark*mainPercentage + courseworkMark*courseworkPercentage);
 	}
 	
 	public double getExamMark(Result r) {
@@ -148,23 +132,28 @@ public class Weightage {
 				return tempG.getMark();
 			}
 		}
-		return 0;
+		return -1;
 	}
 	
 	public double getCourseworkMark(Result r) {
 		double courseworkMark = 0;
+		boolean haveCoursework = false;
 		for (int i = 0; i < r.getAllGrades().size(); i++) {
 			Grade tempG = r.getAllGrades().get(i);
 			if (Objects.equals(gradeType.COURSEWORK, tempG.getType())) {
 				for (int j = 0; j < subcomponent.size(); j ++) {
 					double percentage = subcomponent.get(j).getPercentage();
 					if (Objects.equals(subcomponent.get(j).getName(), tempG.getName())) {
+						haveCoursework = true;
 						courseworkMark += percentage * tempG.getMark();
 						continue;
 					}
 				}
 			}
 		}
-		return (courseworkMark);
+		if (haveCoursework == true)
+			return (courseworkMark);
+		else
+			return -1;
 	}
 }
