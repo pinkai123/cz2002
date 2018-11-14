@@ -170,13 +170,13 @@ public class MainInput {
 										cFlag2 = 0;
 										continue;
 									}
-									else if (lecVac < numL) {
+									else if (lecVac < vacancy) {
 										System.out.println("Each lab's vacancy cannot be more than total course vacancy, please reenter.");
 										cFlag2 = 0;
 										continue;
 									}
-									for (int i = 1; i <= numL; i ++) {
-										newCourse.addLesson(i,vacancy,Lesson.TypeOfLesson.LAB);
+									for (lCounter = 1; lCounter <= numL; lCounter ++) {
+										newCourse.addLesson(lCounter,vacancy,Lesson.TypeOfLesson.LAB);
 									}
 								} while (cFlag2 == 0);
 							case 2:
@@ -196,13 +196,13 @@ public class MainInput {
 										cFlag2 = 0;
 										continue;
 									}
-									else if (lecVac < numL) {
+									else if (lecVac < vacancy) {
 										System.out.println("Each tutorial's vacancy cannot be more than total course vacancy, please reenter.");
 										cFlag2 = 0;
 										continue;
 									}
-									for (int i = 0; i < numL; i ++) {
-										newCourse.addLesson(i,vacancy,Lesson.TypeOfLesson.TUT);
+									for (int j = lCounter; j < numL + lCounter; j ++) {
+										newCourse.addLesson(j,vacancy,Lesson.TypeOfLesson.TUT);
 									}
 								} while (cFlag2 == 0);
 							case 1:
@@ -240,7 +240,7 @@ public class MainInput {
 					
 					// Get student info
 					// do a loop?
-					tempStudent = FindByID.findStudent(matric);
+					tempStudent = IOController.findStudent(matric);
 					if (tempStudent == null) {
 						System.out.println("Student does not exist.");
 						break;
@@ -258,7 +258,7 @@ public class MainInput {
 					
 					// Get course info
 					// do a loop?
-					tempCourse = FindByID.findCourse(courseID);
+					tempCourse = IOController.findCourse(courseID);
 					if (tempCourse == null) {
 						System.out.println("Course does not exist.");
 						break;
@@ -277,8 +277,8 @@ public class MainInput {
 					
 					// Register for course
 					int[] count = tempCourse.countLessons();
-					int labIndex;
-					int tutIndex;
+					int labIndex = 0;
+					int tutIndex = 0;
 					// Get labIndex
 					if (count[1] != 0) 
 						do {
@@ -294,17 +294,17 @@ public class MainInput {
 					if (count[0] != 0)
 						do {
 							cFlag = 1;
-							System.out.println("Choose Tutorial index: [1-" + count[1] + "] ");
+							System.out.println("Choose Tutorial index: ["+(count[1]+1)+"-" + (count[0]+count[1]) + "] ");
 							tutIndex = sc.nextInt();
 							if (tutIndex <= 0 | tutIndex > count[0]) {
 								System.out.println("Invalid lab index range");
 								cFlag = 0;
 							}
-						} while (cFlag == 1);
+						} while (cFlag == 0);
 						
 				
 					// Add student to course and change vacancy
-					
+					mainC.addStudenttoCourse((Student) tempStudent, tempCourse, tutIndex, labIndex);
 					
 					break;
 				case 4:

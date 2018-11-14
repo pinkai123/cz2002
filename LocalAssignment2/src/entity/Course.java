@@ -80,11 +80,11 @@ public class Course {
 	public void setStudentList(ArrayList<Student> studentList){
 		this.studentList = studentList;
 	}
-	public void setLessonList(ArrayList<Lesson> lessonList){
-		this.lessonList = lessonList;
-	}
 	public void setResultList(ArrayList<Result> resultList){
 		this.resultList = resultList;
+	}
+	public void decrementVacancy() {
+		this.vacancy--;
 	}
 	
 	// Add courseWeight //////////////////////////////////
@@ -156,5 +156,16 @@ public class Course {
 				count[0] ++;
 		}
 		return count;
+	}
+	
+	// Get Lesson object with lesson index
+	public Lesson getLesson(int index) {
+		Lesson temp = null;
+		for (int i = 0; i < lessonList.size(); i ++) {
+			if (lessonList.get(i).getLessonIndex() == index) {
+				temp = lessonList.get(i);
+			}
+		}
+		return temp;
 	}
 }

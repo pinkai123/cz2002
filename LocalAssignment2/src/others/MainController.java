@@ -88,7 +88,7 @@ public class MainController {
 	
 	public Course newCourse(String courseID, String courseName, String profMatric, int lecVac) {
 		// Find professor
-		Professor prof = FindByID.findProfessor(profMatric);
+		Professor prof = IOController.findProfessor(profMatric);
 		
 		// Create course object
 		Course newCourse = new Course(courseID,courseName,prof,lecVac);
@@ -98,11 +98,12 @@ public class MainController {
 	public void addCourse(Course newCourse) {
 		// Add course into database
 		FileIO courseIO = new CourseIO();
-		ArrayList<Course> al = new ArrayList<Course>();
-		al.add(newCourse);
-		try{
+		try {
+			ArrayList<Course> al = courseIO.readData();
+			al.add(newCourse);
 			courseIO.saveData(al);
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			System.err.println("IO Exception in adding Course.");
 		}
 	}
@@ -112,6 +113,7 @@ public class MainController {
 		ArrayList al;
 		try {
 			al = courseIO.readData();
+			System.out.println(al.toString());
 		}
 		catch (IOException e) {
 			System.out.println("No Course.");
@@ -130,7 +132,55 @@ public class MainController {
 	// 3. Register student for a course
 	
 	// Add student to course
-	public void 
+	public boolean addStudenttoCourse(Student tempS, Course tempC, int tutIndex, int labIndex) {
+		Lesson tempTut = null;
+		Lesson tempLab = null;
+		
+		// If there is lab, check vacancy
+		if (labIndex != 0) {
+			tempLab = tempC.getLesson(labIndex);
+			if (tempLab.getVacancy() == 0) {
+				System.out.println("No vacacncy in lab.");
+				return false;
+			}
+		}
+		// If there is tut, check vacancy
+		if (tutIndex != 0) {
+			tempTut = tempC.getLesson(tutIndex);
+			if (tempTut.getVacancy() == 0) {
+				System.out.println("No vacancy in tutorial.");
+				return false;
+			}
+		}
+		
+		// Change vacancy
+		// Course Vacancy
+		tempC.decrementVacancy();
+		// Tutorial vacancy
+		int i = tempC.getLessonList().indexOf(tempTut);
+		if (i != -1) {
+			tempC.getLessonList().get(i).decrementVacancy();
+		}
+		// Lab vacancy
+		i = tempC.getLessonList().indexOf(tempLab);
+		if (i != -1) {
+			tempC.getLessonList().get(i).decrementVacancy();
+		}
+		
+		// Add into database
+		tempC.addStudent(tempS);
+		FileIO IO = new CourseIO();
+		try {
+			ArrayList<Course> insert = IO.readData();
+			insert.add(tempC);
+			IO.saveData(insert);
+			System.out.println("Student registered.");
+			return true;
+		}	
+		catch(IOException e) {
+			return false;
+		}
+	}
 	
 	// 10. Print Student Transcript 
 	public void printStudentTranscript(String matric) {

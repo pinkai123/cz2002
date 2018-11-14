@@ -7,7 +7,7 @@ import java.util.Objects;
 import entity.*;
 import fileIO.*;
 
-public class FindByID {
+public class IOController {
 	public static Student findStudent(String id) {
 		FileIO IO = new StudentIO();
 		ArrayList<Student> studentList = null;
@@ -20,9 +20,9 @@ public class FindByID {
 		for (int i = 0; i < studentList.size(); i ++) {
 			result = (Student)studentList.get(i);
 			if (Objects.equals(id, result.getMatric()))
-				break;
+				return result;
 		}
-		return result;
+		return null;
 	}
 	
 	public static Course findCourse(String id) {
@@ -37,9 +37,9 @@ public class FindByID {
 		for (int i = 0; i < courseList.size(); i ++) {
 			result = (Course)courseList.get(i);
 			if (Objects.equals(id, result.getCourseID()))
-				break;
+				return result;
 		}
-		return result;
+		return null;
 	}
 	
 	public static Professor findProfessor(String id) {
@@ -54,9 +54,9 @@ public class FindByID {
 		for (int i = 0; i < professorList.size(); i ++) {
 			result = (Professor)professorList.get(i);
 			if (Objects.equals(id, result.getMatric()));
-				break;
+				return result;
 		}
-		return result;
+		return null;
 	}
 	
 	
