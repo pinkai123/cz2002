@@ -48,14 +48,16 @@ public class CourseIO extends FileIO {
 					step++;
 				}
 				else if(topic.equals("Weightage")) {
-					double mainPercentage = Double.parseDouble(star.nextToken().trim());
-					double courseworkPercentage = Double.parseDouble(star.nextToken().trim());
-					boolean haveSub = Boolean.parseBoolean(star.nextToken().trim());
-					weightage = new Weightage(mainPercentage,courseworkPercentage,haveSub);
-					while(star.hasMoreTokens()) {
-						String Name = star.nextToken().trim();
-						double Percentage = Double.parseDouble(star.nextToken().trim());
-						weightage.setSubcomponent(Name,Percentage);
+					if(star.hasMoreTokens()) {
+						double mainPercentage = Double.parseDouble(star.nextToken().trim());
+						double courseworkPercentage = Double.parseDouble(star.nextToken().trim());
+						boolean haveSub = Boolean.parseBoolean(star.nextToken().trim());
+						weightage = new Weightage(mainPercentage,courseworkPercentage,haveSub);
+						while(star.hasMoreTokens()) {
+							String Name = star.nextToken().trim();
+							double Percentage = Double.parseDouble(star.nextToken().trim());
+							weightage.setSubcomponent(Name,Percentage);
+						}
 					}
 					step++;
 				}
@@ -126,33 +128,36 @@ public void saveData(ArrayList al) throws IOException {
 				st.append("Student");
 				ArrayList<Student> Student = new ArrayList();
 				Student = course.getStudentList();
-				for(int j = 0; j <Student.size();j++) {
-					st.append(SEPARATOR);
-					st.append(Student.get(j).getName());
+				if(Student != null) {
+					for(int j = 0; j <Student.size();j++) {
+						st.append(SEPARATOR);
+						st.append(Student.get(j).getName());
+					}
 				}
 				alw.add(st.toString()) ;
-				/*
+				
 				st.setLength(0);
 				Weightage Weightage = course.getCourseWeightage(); 
 				st.append("Weightage");
 				st.append(SEPARATOR);
-				st.append(Weightage.getMainPercentage());
-				st.append(SEPARATOR);
-				st.append(Weightage.getCourseworkPercentage());
-				st.append(SEPARATOR);
-				st.append(Weightage.getHaveSub());
-				ArrayList<Subcomponent> Subcomponents = new ArrayList();
-				Subcomponents = Weightage.getSubcomponent();
-				System.out.println(Subcomponents.size());
-				for(int j = 0; j <Subcomponents.size();j++) {
-					 Subcomponent TutLab = Subcomponents.get(j);
-					 st.append(SEPARATOR);
-					 st.append(TutLab.getName());
-					 st.append(SEPARATOR);
-					 st.append(TutLab.getPercentage());
+				if(Weightage!= null) {
+					st.append(Weightage.getMainPercentage());
+					st.append(SEPARATOR);
+					st.append(Weightage.getCourseworkPercentage());
+					st.append(SEPARATOR);
+					st.append(Weightage.getHaveSub());
+					ArrayList<Subcomponent> Subcomponents = new ArrayList();
+					Subcomponents = Weightage.getSubcomponent();
+					System.out.println(Subcomponents.size());
+					for(int j = 0; j <Subcomponents.size();j++) {
+						 Subcomponent TutLab = Subcomponents.get(j);
+						 st.append(SEPARATOR);
+						 st.append(TutLab.getName());
+						 st.append(SEPARATOR);
+						 st.append(TutLab.getPercentage());
+					}
 				}
 				alw.add(st.toString()) ;
-				*/
 				st.setLength(0);
 				ArrayList<Lesson> Lessons = new ArrayList();
 				Lessons = course.getLessonList();
