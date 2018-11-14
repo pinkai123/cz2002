@@ -37,7 +37,7 @@ public class ResultIO extends FileIO {
 	}
 
   // an example of saving
-public void saveData(ArrayList al) throws IOException {
+	public void saveData(ArrayList al) throws IOException {
 		ArrayList alw = new ArrayList() ;// to store TutLabs data
 
         for (int i = 0 ; i < al.size() ; i++) {

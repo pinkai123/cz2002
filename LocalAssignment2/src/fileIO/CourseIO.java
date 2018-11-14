@@ -60,6 +60,7 @@ public class CourseIO extends FileIO {
 						}
 					}
 					step++;
+					
 				}
 				else if(topic.equals("Lesson")) {
 				// get individual 'fields' of the string separated by SEPARATOR
@@ -72,10 +73,8 @@ public class CourseIO extends FileIO {
 						Lesson Tut = new Lesson(Index, VacancyLesson ,TypeOfLesson.valueOf(Type));
 						ArrayList<String> StudentName = new ArrayList();
 						ArrayList<Student> StudentInfo = new ArrayList();
-						for(int i1 =2; i1<Lesson1.length;i1++) {
-							//get student class from name	
+						for(int i1 =3; i1<Lesson1.length;i1++) {
 							StudentName.add(Lesson1[i1].trim());
-							//System.out.println(i1 + "!");
 						}
 						StudentInfo = Translation.StringtoStudents(StudentName);
 						Tut.addStudentList(StudentInfo);
@@ -83,15 +82,18 @@ public class CourseIO extends FileIO {
 					}
 					step++;
 				}
-				// changed to 3 ///////////////////////
-				if( step == 3) {
+				// changed to 4 ///////////////////////
+				if( step == 4) {
 					// Change this to OO
 					Course = new Course(CourseID,CourseName,CourseCoordinator,Vacancy,TutLab);
+					TutLab = new ArrayList();
 					if(weightage!= null) {
 						Course.setCourseWeightage(weightage);
+						weightage = null;
 					}
 					if(Students != null) {
 						Course.setStudentList(Students);
+						Students = new ArrayList();
 					}
 					alr.add(Course);
 					step = 0;

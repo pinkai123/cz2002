@@ -1,9 +1,11 @@
 package others;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import entity.*;
+import entity.Lesson.TypeOfLesson;
 import fileIO.*;
 
 public class MainInput {
@@ -14,6 +16,7 @@ public class MainInput {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("STUDENT COURSE REGIRSTRATION AND MARK ENTRY Application");
 		MainController mainC = new MainController();
+		Database.getIO();
 		
 		do {
 			System.out.println("==================================");
@@ -312,9 +315,184 @@ public class MainInput {
 					break;
 				case 5:
 					// Print student list by lecture, tutorial or laboratory session for a course
+					Course TempCourse;
+					int LessonID;
+					Lesson Lesson = null;
+					ArrayList <Student> Students = new ArrayList();
+					ArrayList <Lesson> Lessons = new ArrayList();
+					ArrayList <Course> Courses = Database.getAllCourse(); // get all course
+					boolean haveTutLab = false;
+					//All courses available
+					for(int k =0 ; k <Courses.size();k++) {
+						System.out.println(Courses.get(k).getCourseID());
+					}
+				
+					System.out.println("Enter the CourseID: ");
+					String CourseID = sc.next();
+					// get the choosen course
+					TempCourse = Database.getCourse(CourseID);
+					if (TempCourse == null) {
+						System.out.println("Course does not exist.");
+						break;
+					}
+					Lessons = TempCourse.getLessonList();
+					System.out.println("Display Option: ");
+					System.out.println("1 - Lecture");
+					System.out.println("2 - Lab");
+					System.out.println("3 - Tutorial");
+					int choice = sc.nextInt();
+					switch(choice) {
+					case 1:
+						Students = TempCourse.getStudentList();
+						// check whether any student is taking the course
+						if(Students.isEmpty()) {
+							System.out.println("No students are currently taking this course.");
+						}
+						for(int i = 0; i < Students.size(); i++) {
+							System.out.println(Students.get(i).getName());
+						}
+						break;
+					case 2:
+						
+						for(int k =0 ; k <Lessons.size();k++) {
+							if(Lessons.get(k).getLType() == TypeOfLesson.LAB) {
+								System.out.print(Lessons.get(k).getLessonIndex() + " ");
+								haveTutLab = true;
+							}
+						}
+						// check this course has any lab slot
+						if(!haveTutLab) {
+							System.out.println("There is no Lab Slot for this course. ");
+							break;
+						}
+						System.out.println();
+						System.out.println("Enter LessonID: ");
+						LessonID = sc.nextInt();
+						// find the Lab slot
+						Lesson = FindByID.findTutLab(TempCourse, LessonID, TypeOfLesson.LAB);
+						if(Lesson == null) {
+							System.out.println("This Lab slot does not exist");
+							break;
+						}
+						Students = Lesson.getStudentList();
+						// check whether any student is taking this tutorial slot
+						if(Students.isEmpty()) {
+							System.out.println("No students are currently taking this course.");
+						}
+						for(int i = 0; i < Students.size(); i++) {
+							System.out.println(Students.get(i).getName());
+						}
+						break;
+					case 3:
+						for(int k =0 ; k <Lessons.size();k++) {
+							if(Lessons.get(k).getLType() == TypeOfLesson.TUT)
+								System.out.print(Lessons.get(k).getLessonIndex() + " ");
+								haveTutLab = true;
+						}
+						// check if this course has any tutorial slot
+						if(!haveTutLab) {
+							System.out.println("There is no Tutorial Slot for this course. ");
+							break;
+						}
+						System.out.println();
+						System.out.println("Enter LessonID: ");
+						LessonID = sc.nextInt();
+						// find the Lab slot
+						Lesson = FindByID.findTutLab(TempCourse, LessonID, TypeOfLesson.TUT);
+						if(Lesson == null) {
+							System.out.println("This Tutorial slot does not exist");
+							break;
+						}
+						Students = Lesson.getStudentList();
+						// check whether any student is taking this tutorial slot
+						if(Students.isEmpty()) {
+							System.out.println("No students are currently taking this course.");
+						}
+						for(int i = 0; i < Students.size(); i++) {
+							System.out.println(Students.get(i).getName());
+						}
+						break;
+					}
 					break;
 				case 6:
 					// Enter course assessment components weightage
+					ArrayList <Course> Courses1 = Database.getAllCourse(); 
+					for(int k =0 ; k <Courses1.size();k++) {
+						System.out.println(Courses1.get(k).getCourseID());
+					}
+				
+					System.out.println("Enter the CourseID: ");
+					String courseID1 = sc.next();
+					// get the choosen course
+					TempCourse = Database.getCourse(courseID1);
+					//check if course exist
+					if (TempCourse == null) {
+						System.out.println("Course does not exist.");
+						break;
+					}
+					System.out.println("Enter Main Weightage(0 - 1  e.g. 60%  = 0.6)");
+					double mainPercentage = sc.nextDouble();
+					System.out.println("Enter Coursework Weightage(0 - 1  e.g. 60%  = 0.6)");
+					double courseworkPercentage = sc.nextDouble();
+					// ensure percentage add up to 1
+					if(!Weightage.verificationOverall(mainPercentage, courseworkPercentage)) {
+						System.out.println("Please make sure both percentage add up to 1");
+						break;
+					}
+					// choose to have subcomponent or not
+					System.out.println("Please enter 1 if you have Subcomponent or 0 if you hvae none");
+					int HaveSub = sc.nextInt();
+					if(HaveSub == 1) {
+						TempCourse.addWeightage(mainPercentage, courseworkPercentage, true);
+					}
+					else if(HaveSub == 0)
+						TempCourse.addWeightage(mainPercentage, courseworkPercentage, false);
+					else
+						System.out.println("Please enter either 1 or 0 only");
+					// enter subcomponent
+					if(HaveSub == 1) {
+						ArrayList<Double> SubPercentages = new ArrayList();
+						ArrayList<String> Names = new ArrayList();
+						double subPercentage;
+						while(true) {
+							System.out.println("Enter the Perceentage of subcomponent(2 to end): ");
+							subPercentage = sc.nextDouble();
+							if(subPercentage == 2) {
+								double totalPercentage = 0;
+								for(int i = 0; i< SubPercentages.size();i++) {
+									totalPercentage += SubPercentages.get(i);
+								}
+								//emsure percentage add to 1
+								if(totalPercentage != 1) {
+									System.out.println("Please type in all the Subcomponent again and ensure it add up to 1");
+									SubPercentages = new ArrayList();
+									Names = new ArrayList();
+									continue;
+								}
+								for(int i = 0; i< SubPercentages.size();i++) {
+									TempCourse.addSubcomponent(Names.get(i),SubPercentages.get(i));
+								}
+								System.out.println("Weightage add succesfully.");
+								break;
+							}
+							if(subPercentage <= 0 || subPercentage >= 1) {
+								System.out.println("Please enter from 0 - 1");
+								continue;
+							}
+							System.out.println("Enter the Name of the subcomponent: ");
+							String Name = sc.next();
+							// check for existing name
+							if(Weightage.verificationSubcomponentName(Names, Name)) {
+								Names.add(Name);
+								SubPercentages.add(subPercentage);
+							}
+							else {
+								System.out.println("The Name has been taken");
+								continue;
+							}
+							
+						}
+					}
 					break;
 				case 7:
 					// Enter coursework mark - inclusive of its components
@@ -343,6 +521,7 @@ public class MainInput {
 				case 11:
 					// Quit application
 					System.out.println("Stopping application...");
+					Database.returnIO();
 					break;
 				default:
 					System.out.println("Invalid input.");

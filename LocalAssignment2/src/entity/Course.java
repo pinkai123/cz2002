@@ -65,6 +65,12 @@ public class Course {
 	}
 	
 	// Mutators
+	public void addWeightage(double mainPercentage, double courseworkPercentage,boolean haveSub) {
+		courseWeightage = new Weightage(mainPercentage, courseworkPercentage, haveSub);
+	}
+	public void addSubcomponent(String name, double percentage) {
+		courseWeightage.setSubcomponent(name, percentage);
+	}
 	public void setCourseID(String courseID){
 		this.courseID = courseID;
 	}

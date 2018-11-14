@@ -49,6 +49,6 @@ public class StudentIO extends FileIO {
 				st.append(Student.getEmail());
 				alw.add(st.toString()) ;
 			}
-			write(fileName,alw,true);
+			write(fileName,alw,false);
 	}
 }

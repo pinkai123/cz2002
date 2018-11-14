@@ -16,8 +16,8 @@ public class Weightage {
 		this.haveSub = haveSub;
 	}
 	
-	public static boolean verificationOverall(int mainPercentage, int courseworkPercentage) {
-		if(mainPercentage + courseworkPercentage == 100) {
+	public static boolean verificationOverall(double mainPercentage, double courseworkPercentage) {
+		if(mainPercentage + courseworkPercentage == 1) {
 			return true;
 		}
 		else 
@@ -33,10 +33,11 @@ public class Weightage {
 		return true;
 	}
 	
-	public static boolean verificationSubcomponentName(ArrayList<Subcomponent> subcomponent, String name, int noSub) {
-		for(int i= 0;i<noSub;i++) {
-			if((((Subcomponent) subcomponent.get(i)).getName()).equals(name))
+	public static boolean verificationSubcomponentName(ArrayList<String> subcomponent, String name) {
+		for(int i= 0;i<subcomponent.size();i++) {
+			if(subcomponent.get(i).equals(name)) {
 				return false;
+			}
 		}
 		return true;
 	}

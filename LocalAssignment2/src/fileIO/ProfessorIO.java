@@ -49,7 +49,7 @@ public void saveData(ArrayList al) throws IOException {
 				st.append(prof.getEmail());
 				alw.add(st.toString()) ;
 			}
-			write(fileName,alw,true);
+			write(fileName,alw,false);
 	}
 
 }
