@@ -10,12 +10,9 @@ import fileIO.*;
 public class MainController {
 	
 	// 1. ADD A STUDENT
-	public boolean addStudent(String name, String matric, String email) {
-		FileIO studentIO = new StudentIO();
-		ArrayList al = new ArrayList();
-		
+	public boolean addStudent(String name, String matric, String email) {		
 		// Create student object
-		Person newStudent = new Student(name, matric, email);
+		Student newStudent = new Student(name, matric, email);
 		
 		// Check whether existing 
 		boolean isExisting = Student.isExisting(matric);
@@ -25,13 +22,7 @@ public class MainController {
 		}
 		
 		// Add student to database
-		al.add(newStudent);
-		try {
-			studentIO.saveData(al);
-			System.out.println("Student successfully added.");
-		} catch (IOException e) {
-			return false;
-		}
+		Database.addStudent(newStudent);
 		return true;
 	}
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import entity.*;
+import entity.Grade.TypeOfResult;
 import entity.Lesson.TypeOfLesson;
 import fileIO.*;
 
@@ -496,9 +497,114 @@ public class MainInput {
 					break;
 				case 7:
 					// Enter coursework mark - inclusive of its components
+					ArrayList <Course> Courses11 = Database.getAllCourse(); 
+					for(int k =0 ; k <Courses11.size();k++) {
+						System.out.println(Courses11.get(k).getCourseID());
+					}
+				
+					System.out.println("Enter the CourseID: ");
+					String courseID11 = sc.next();
+					// get the choosen course
+					TempCourse = Database.getCourse(courseID11);
+					//check if course exist
+					if (TempCourse == null) {
+						System.out.println("Course does not exist.");
+						break;
+					}
+					System.out.println("Enter the Student Matric Number: ");
+					String Matric = sc.next();
+					Student Student = Database.getStudent(Matric);
+					//check whether student is in the database
+					if(Student == null) {
+						System.out.println("Student does not exist");
+						break;
+					}
+					//check whether the student take this course
+					if(!TempCourse.studentInCourse(Student)) {
+						System.out.println("Student is not in course");
+						break;
+					}
+					//check whether weightage has been added
+					Weightage Weightage = TempCourse.getCourseWeightage();
+					if(Weightage == null) {
+						System.out.println("Please enter the Weightage first!");
+						break;
+					}
+					//check for existing result or not construct
+					Result Result = Database.getResult(Matric, courseID11);
+					if(Result == null) {
+						Result = new Result(TempCourse,Student);
+					}
+					//coursework withouht subcomponent
+					if(!Weightage.getHaveSub()) {
+						System.out.println("This course has CourseWork without Subcomponent.");
+						System.out.println("Enter mark for coursework(0 -1): ");
+						double mark = sc.nextDouble();
+						if(mark > 1|| mark < 0) {
+							System.out.println("Enter Mark from 0 - 1");
+							break;
+						}
+						Result.addGrade(TypeOfResult.COURSEWORK, null, mark);
+						System.out.println("Result added succesfully");
+					}
+					//coursework with subcomponent
+					else {
+						System.out.println("This course has CourseWork with Subcomponents.");
+						ArrayList<Subcomponent> Subcomponents = Weightage.getSubcomponent();
+						for(int i = 0;i < Subcomponents.size(); i++) {
+							System.out.println("Enter the mark for " + Subcomponents.get(i).getName() + "(0 -1):");
+							double mark = sc.nextDouble();
+							if(mark > 1|| mark < 0) {
+								System.out.println("Enter Mark from 0 - 1");
+								break;
+							}
+							Result.addGrade(TypeOfResult.COURSEWORK, Subcomponents.get(i).getName(), mark);
+							System.out.println("Result of" + Subcomponents.get(i).getName() +"added succesfully");
+						}
+					}
 					break;
 				case 8:
 					// Enter exam mark
+					ArrayList <Course> Courses2 = Database.getAllCourse(); 
+					for(int k =0 ; k <Courses2.size();k++) {
+						System.out.println(Courses2.get(k).getCourseID());
+					}
+					System.out.println("Enter the CourseID: ");
+					String courseID2 = sc.next();
+					// get the choosen course
+					TempCourse = Database.getCourse(courseID2);
+					//check if course exist
+					if (TempCourse == null) {
+						System.out.println("Course does not exist.");
+						break;
+					}
+					System.out.println("Enter the Student Matric Number: ");
+					String MatricNum = sc.next();
+					Student Student1 = Database.getStudent(MatricNum);
+					//check whether student in the database
+					if(Student1 == null) {
+						System.out.println("Student does not exist");
+						break;
+					}
+					//check whether student take this course
+					if(!TempCourse.studentInCourse(Student1)) {
+						System.out.println("Student is not in course");
+						break;
+					}
+					//check for existing result or else construct
+					Result result = Database.getResult(MatricNum, courseID2);
+					if(result == null) {
+						result = new Result(TempCourse,Student1);
+					}
+					//mark verification
+					System.out.println("Enter exam mark(0 -1): ");
+					double mark = sc.nextDouble();
+					if(mark > 1|| mark < 0) {
+						System.out.println("Enter Mark from 0 - 1");
+						break;
+					}
+					result.addGrade(TypeOfResult.EXAM, null, mark);
+					System.out.println("Exam mark added succesfully");
 					break;
 				// Print course statistics
 				case 9:
@@ -510,10 +616,10 @@ public class MainInput {
 						cFlag = 1;
 						System.out.println("Enter Student Matric: ");
 						matric = sc.next().toUpperCase();
-						if (!Student.isValidMatric(matric)) {
-							System.out.println("Invalid matric format.");
-							cFlag = 0;
-						}
+//						if (!Student.isValidMatric(matric)) {
+//							System.out.println("Invalid matric format.");
+//							cFlag = 0;
+//						}
 					} while(cFlag == 0);
 					
 					mainC.printStudentTranscript(matric);					

@@ -1,12 +1,13 @@
 package entity;
 
 public class Grade {
-	private String type;
+	public enum TypeOfResult{EXAM, COURSEWORK};
+	private TypeOfResult type;
 	private String name;
 	private double mark = 0;
 	
 	// Constructor
-	public Grade(String type, String name, double mark) {
+	public Grade(TypeOfResult type, String name, double mark) {
 		this.type = type;
 		this.name = name;
 		this.mark = mark;
@@ -16,7 +17,7 @@ public class Grade {
 	public void setMark(double mark) {
 		this.mark = mark;
 	}
-	public String getType() {
+	public TypeOfResult getType() {
 		return type;
 	}
 	public String getName() {

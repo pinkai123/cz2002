@@ -2,7 +2,10 @@ package entity;
 
 import java.util.ArrayList;
 
+import entity.Grade.TypeOfResult;
+
 public class Result {
+	
 	private Course course;
 	private Student student;
 	// Grade objects as attributes (Composition)
@@ -14,7 +17,7 @@ public class Result {
 		this.student = student;
 	}
 	
-	public void addGrade(String type, String name, double mark) {
+	public void addGrade(TypeOfResult type, String name, double mark) {
 		Grade grade = new Grade(type,name,mark);
 		allGrades.add(grade);
 	}

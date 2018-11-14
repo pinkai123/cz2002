@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import entity.*;
+import entity.Grade.TypeOfResult;
+import entity.Lesson.TypeOfLesson;
 
 public class ResultIO extends FileIO {
 	public static final String SEPARATOR = "|";
@@ -26,7 +28,7 @@ public class ResultIO extends FileIO {
 					Result Result = new Result(CourseID,StudentName);
 					while(star.hasMoreTokens()) {
 						String[] GradeInfo = star.nextToken().trim().split(",");
-						String type = GradeInfo[0].trim();
+						TypeOfResult type = TypeOfResult.valueOf(GradeInfo[0].trim());
 						String name = GradeInfo[1].trim();
 						double mark = Double.parseDouble(GradeInfo[2].trim());
 						Result.addGrade(type, name, mark);
