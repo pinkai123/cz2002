@@ -139,4 +139,32 @@ public class Weightage {
 		}
 		return overallMark;
 	}
+	
+	public double getExamMark(Result r) {
+		for (int i = 0; i < r.getAllGrades().size(); i ++) {
+			Grade tempG = r.getAllGrades().get(i);
+			// Exam
+			if (Objects.equals(gradeType.EXAM, tempG.getType())) {
+				return tempG.getMark();
+			}
+		}
+		return 0;
+	}
+	
+	public double getCourseworkMark(Result r) {
+		double courseworkMark = 0;
+		for (int i = 0; i < r.getAllGrades().size(); i++) {
+			Grade tempG = r.getAllGrades().get(i);
+			if (Objects.equals(gradeType.COURSEWORK, tempG.getType())) {
+				for (int j = 0; j < subcomponent.size(); j ++) {
+					double percentage = subcomponent.get(j).getPercentage();
+					if (Objects.equals(subcomponent.get(j).getName(), tempG.getName())) {
+						courseworkMark += percentage * tempG.getMark();
+						continue;
+					}
+				}
+			}
+		}
+		return (courseworkMark*100/(courseworkPercentage));
+	}
 }

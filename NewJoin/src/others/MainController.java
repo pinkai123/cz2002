@@ -184,7 +184,17 @@ public class MainController {
 			System.out.println("Course does not exist");
 			return;
 		}
-		// Get results for course
+		System.out.println("Student, Overall percentage, Exam percentage, Coursework percentage");
+		// Get results for course and weightage
+		ArrayList<Result> resultList = tempC.getResultList();
+		Weightage w = tempC.getCourseWeightage();
+		for (int i = 0; i < resultList.size(); i++) {
+			double overallMark = w.calculateMark(resultList.get(i));
+			double examMark = w.getExamMark(resultList.get(i));
+			double courseworkMark = w.getCourseworkMark(resultList.get(i));
+			String matric = resultList.get(i).getStudent().getMatric();
+			System.out.println(matric + " " + overallMark + " " + examMark + " " + courseworkMark);
+		}
 	}
 	
 	public void printCourseAnalysis(String courseID) {

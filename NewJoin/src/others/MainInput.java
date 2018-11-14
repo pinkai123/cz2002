@@ -11,11 +11,11 @@ public class MainInput {
 
 	public static void main(String[] args) {	
 		// Data for testing
-		Student s1 = new Student("Jess Chew", "U1722206C", "jchew032@e.ntu.edu.sg");
-		Student s2 = new Student("Jacob Goh", "U1234567A", "jgoh@e.ntu.edu.sg");
+		Student s1 = new Student("JESS CHEW", "U1722206C", "jchew032@e.ntu.edu.sg");
+		Student s2 = new Student("JACOB GOH", "U1234567A", "jgoh@e.ntu.edu.sg");
 		Professor p1 = new Professor("Mr Ding", "P1111111A", "123@e.ntu.edu.sg");
 		Course c1 = new Course("CZ2001", "ALGO", p1, 2);
-		c1.addStudent(s2);
+		//??c1.addStudent(s2);
 		c1.addLesson(1, 1, TypeOfLesson.LAB);
 		c1.addLesson(2, 2, TypeOfLesson.TUT);
 		
@@ -337,7 +337,7 @@ public class MainInput {
 					}
 				
 					System.out.println("Enter the CourseID: ");
-					String CourseID = sc.next();
+					String CourseID = sc.next().toUpperCase();
 					// get the choosen course
 					TempCourse = Database.getCourse(CourseID);
 					if (TempCourse == null) {
