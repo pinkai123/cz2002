@@ -5,42 +5,136 @@ import java.util.Objects;
 
 import entity.Grade.gradeType;
 
+/**
+ * Represents the assessment weightage of a particular course.
+ * @author SS5 Group 4
+ * @version 1.0
+ * @since 2018-11-15
+ */
 public class Weightage {
+	/**
+	 * The assessment weightage of the exam (main component).
+	 */
 	private double mainPercentage;
+	
+	/**
+	 * The assessment weightage of the coursework.
+	 */
 	private double courseworkPercentage;
+	
+	/**
+	 * Indicates whether there are subcomponents.
+	 */
 	private boolean haveSub;
 	// Subcomponent objects as attribute (Composition)
+	/**
+	 * All subcomponents in the assessment weightage.
+	 */
 	private ArrayList<Subcomponent> subcomponent = new ArrayList<Subcomponent>();
 
+	/**
+	 * Create a new weightage for a course.
+	 * Specify the assessment percentage distribution of different components.
+	 * @param mainPercentage This weightage's main component assessment percentage
+	 * @param courseworkPercentage This weightage's coursework component assessment percentage
+	 * @param haveSub Indication of existence of subcomponent in weightage
+	 */
 	public Weightage(double mainPercentage, double courseworkPercentage,boolean haveSub){
 		this.mainPercentage = mainPercentage;
 		this.courseworkPercentage = courseworkPercentage;
 		this.haveSub = haveSub;
 	}
 	
+	/**
+	 * Check whether all subcomponent in weightage adds up to 1.
+	 * @param subPercentage All the subcomponents' percentage 
+	 * @return true if subcomponents' percentage in this weightage adds up to 1
+	 */
+	public static boolean verificationSubcomponentPercentage(ArrayList<Double> subPercentage) {
+		double percentage = 0;
+		for (int i = 0; i < subPercentage.size(); i ++) {
+			percentage += subPercentage.get(i);
+		}
+		if (percentage != 1)
+			return false;
+		return true;
+	}
+	
+	/**
+	 * Check whether there a subcomponent name is the same as any of the other subcomponent.
+	 * @param subcomponent other subcomponents' name
+	 * @param name a subcomponent name
+	 * @return false if there is a match in subcomponent names
+	 */
+	public static boolean verificationSubcomponentName(ArrayList<String> subcomponent, String name) {
+		for(int i= 0;i<subcomponent.size();i++) {
+			if(subcomponent.get(i).equals(name)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	// Accessors
+	/**
+	 * Get the main component percentage in this weightage.
+	 * @return This weightage's main component percentage
+	 */
 	public double getMainPercentage(){return mainPercentage;}
+	
+	/**
+	 * Get the coursework percentage in this weightage.
+	 * @return This weightage;s coursework percentage
+	 */
 	public double getCourseworkPercentage(){return courseworkPercentage;}
+	
+	/**
+	 * Check whether this weightage has subcomponents.
+	 * @return true if this weightage has subcomponents
+	 */
 	public boolean getHaveSub() { return haveSub;}
 	public ArrayList<Subcomponent> getSubcomponent(){
 		return subcomponent;
 	}
 	
 	// Mutators
+	/**
+	 * Changes the main component percentage in this weightage.
+	 * @param mainPercentage This weightage's new main component percentage
+	 */
 	public void setMainPercentage(double mainPercentage){
 		this.mainPercentage = mainPercentage;
 	}
+	
+	/**
+	 * Changes the coursework percentage in this weightage.
+	 * @param courseworkPercentage This weightage's coursework percentage
+	 */
 	public void setCourseworkPercentage(double courseworkPercentage){
 		this.courseworkPercentage = courseworkPercentage;
 	}
+	
+	/** 
+	 * Update that subcomponent has subcomponents.
+	 */
 	public void setHaveSub(){
 		this.haveSub = true;
 	}
+	
+	/**
+	 * Add a new subcomponent into this weightage.
+	 * @param name The new subcomponent's name in this weightage
+	 * @param percentage The new subcomponent's percentage in this weightage
+	 */
 	public void setSubcomponent(String name, double percentage) {
 		Subcomponent Subcomponent = new Subcomponent(name,percentage);
 		subcomponent.add(Subcomponent);
 	}
 	
+	/**
+	 * Prints the results given with its assessment weightage counterpart.
+	 * @param r The results that corresponds to this weightage
+	 */
 	public void printMarks(Result r) { 
 		double mark;
 		double percentage = 0;
@@ -86,7 +180,11 @@ public class Weightage {
 	
 	}
 	
-	
+	/**
+	 * Get the letter grade according to this marks.
+	 * @param marks
+	 * @return
+	 */
 	public String calculateGrade(double marks) {
 		if (marks >= 90)
 			return "A+";
@@ -114,6 +212,12 @@ public class Weightage {
 			return "F";
 	}
 	
+	/**
+	 * Calculate the overall assessment score according to the given exam marks and coursework marks based on this weightage.
+	 * @param examMark Exam marks based on this weightage
+	 * @param courseworkMark Coursework mark based on this weightage
+	 * @return final mark 
+	 */
 	public double getOverallMark(double examMark, double courseworkMark) {
 		if (examMark == -1 | courseworkMark == -1) {
 			return -1;
@@ -121,6 +225,11 @@ public class Weightage {
 		return (examMark*mainPercentage + courseworkMark*courseworkPercentage);
 	}
 	
+	/**
+	 * Get the exam marks based on this weightage.
+	 * @param r all results that correspond to this weightage
+	 * @return exam marks or -1 if no exam marks
+	 */
 	public double getExamMark(Result r) {
 		for (int i = 0; i < r.getAllGrades().size(); i ++) {
 			Grade tempG = r.getAllGrades().get(i);
@@ -132,6 +241,11 @@ public class Weightage {
 		return -1;
 	}
 	
+	/**
+	 * Get the coursework marks based on this weightage.
+	 * @param r all results that correspond to this weightage
+	 * @return exam marks or -1 if no exam marks
+	 */
 	public double getCourseworkMark(Result r) {
 		double courseworkMark = 0;
 		boolean haveCoursework = false;
