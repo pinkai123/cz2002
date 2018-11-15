@@ -6,9 +6,23 @@ import java.util.Objects;
 import entity.*;
 import entity.Grade.gradeType;
 
+/**
+ * Main Controller to handle SCRAME
+ * @author SS5 Group 4
+ * @version 1.0
+ * @since 2018-11-15
+ */
 public class MainController {
 	// 1. ADD A STUDENT
-	// add student to database
+	/**
+	 * Add student into the data.
+	 * Return a boolean to inform whether adding is successfully.
+	 * Unsuccessful adding occurs as the student already exists in the database.
+	 * @param name Student's name
+	 * @param matric Student's matriculation number
+	 * @param email Student's school email
+	 * @return true if adding of student is successful
+	 */
 	public static boolean addStudent(String name, String matric, String email) {
 		// Create student object
 		Person newStudent = new Student(name, matric, email);
@@ -25,7 +39,9 @@ public class MainController {
 		return true;
 	}
 	
-	// print student 
+	/**
+	 * Print all students in the school.
+	 */
 	public static void printAllStudent() {
 		// Retrieve students from database
 		ArrayList<Student> al = Database.getAllStudent();
@@ -41,7 +57,14 @@ public class MainController {
 	
 	
 	// 2. ADD A COURSE
-	// Check course and prof
+	/**
+	 * Check whether it is valid to add a course.
+	 * Invalid if course already exists.
+	 * Invalid if course coordinator does not exist.
+	 * @param courseID Course's primary key
+	 * @param profMatric Professor matriculation number
+	 * @return true if valid to add a course
+	 */
 	public static boolean checkCourse(String courseID, String profMatric) {
 		// Get course from database
 		Course newCourse = Database.getCourse(courseID);
@@ -59,7 +82,14 @@ public class MainController {
 		return true;
 	}
 	
-	// Create course object
+	/**
+	 * Create a new course with given information regarding course.
+	 * @param courseID Course's primary key
+	 * @param courseName Course's name
+	 * @param profMatric Professor matriculation number
+	 * @param lecVac Total vacancy in course
+	 * @return New course
+	 */
 	public static Course newCourse(String courseID, String courseName, String profMatric, int lecVac) {
 		// Find professor
 		Professor prof = Database.getProfessor(profMatric);
@@ -69,7 +99,10 @@ public class MainController {
 		return newCourse;
 	}
 	
-	// Add lesson to course
+	/**
+	 * Add course into database.
+	 * @param tempC Course
+	 */
 	public static void addCourse(Course tempC) {
 		Professor prof = tempC.getCourseCoordinator();
 		prof.addCourse(tempC);
@@ -79,7 +112,9 @@ public class MainController {
 		return;
 	}
 	
-	// Print all courses
+	/**
+	 * Print all courses in the school.
+	 */
 	public static void printAllCourse() {		
 		ArrayList<Course> courseList = Database.getAllCourse();
 		System.out.println("############################################\n" +
@@ -93,7 +128,14 @@ public class MainController {
 	}
 	
 	// 3. REGISTER STUDENT FOR A COURSE
-	// Check whether student and course exists
+	/**
+	 * Check whether it is valid to register student into course.
+	 * Invalid when either student or course does not exist.
+	 * Invalid if student has already registered for course.
+	 * @param matric Student matriculation number
+	 * @param courseID Course primary key
+	 * @return true if valid to register student 
+	 */
 	public static boolean checkCanRegister(String matric, String courseID) {
 		Student s = Database.getStudent(matric);
 		Course c = Database.getCourse(courseID);
@@ -124,7 +166,15 @@ public class MainController {
 
 	}
 	
-	// Add student to course
+	/**
+	 * Try to register student into a course. 
+	 * Will not register is no vacancy in lab or tutorial.
+	 * @param matric Student matriculation number
+	 * @param courseID Course's primary key
+	 * @param tutIndex Tutorial's primary key
+	 * @param labIndex Laboratory's primary key
+	 * @return true if successfully register student into course
+	 */
 	public static boolean addStudentToCourse(String matric, String courseID, int tutIndex, int labIndex) {
 		// Get course and student objects
 		Course tempC = Database.getCourse(courseID);
@@ -165,6 +215,12 @@ public class MainController {
 		return true;
 	}
 	
+	/**
+	 * Update vacancy of course, laboratory and tutorial
+	 * @param courseID Course's primary key
+	 * @param tutIndex Tutorial's primary key
+	 * @param labIndex Laboratory's primary key
+	 */
 	public static void updateVacancy(String courseID, int tutIndex, int labIndex) {
 		Course tempC = Database.getCourse(courseID);
 		// Decrement Vacancy
@@ -176,6 +232,12 @@ public class MainController {
 	}
 	
 	// 4. FIND VACANCY
+	/**
+	 * Print the vacancy of a lesson in a particular course.
+	 * Accounts for non-existent course and lesson.
+	 * @param courseID Course's primary key
+	 * @param classIndex Lesson's primary key
+	 */
 	public static void findVacancy(String courseID, int classIndex) {
 		Course tempC = Database.getCourse(courseID);
 		if (tempC == null) {
@@ -194,8 +256,11 @@ public class MainController {
 	
 	
 	// 9. Print course statistics	
-	// Show percentage overall, exam only, coursework only
-	
+	/**
+	 * Display course statistics.
+	 * Show percentage overall, exam only, coursework only for each student.
+	 * @param courseID Course's primary key
+	 */
 	public static void printCourseStat(String courseID) {
 		// Check if course exists
 		Course tempC = Database.getCourse(courseID);
@@ -239,6 +304,11 @@ public class MainController {
 		
 	}
 	
+	/**
+	 * Print course analysis.
+	 * Print minimum, maximum and average of results.
+	 * @param courseID Course's primary key
+	 */
 	public static void printCourseAnalysis(String courseID) {
 		// Get course object
 		Course tempC = Database.getCourse(courseID);
@@ -307,7 +377,12 @@ public class MainController {
 		
 	}
 	
-	// 10. Print Student Transcript 
+	// 10. Print Student Transcript
+	/**
+	 * Print Student Transcript.
+	 * For one student, print their overall grade and marks, and marks of each components for every course he/she registered in.
+	 * @param matric Student matriculation number
+	 */
 	public static void printStudentTranscript(String matric) {
 		// Find student
 		Student tempS = Database.getStudent(matric);
@@ -359,7 +434,13 @@ public class MainController {
 	}
 	
 	
-	// Add result 
+	/**
+	 * Add result into database, along with grade.
+	 * @param result Result 
+	 * @param type Type of grade 
+	 * @param name Name of grade
+	 * @param mark Mark of grade
+	 */
 	public static void addResult(Result result, gradeType type, String name, double mark) {
 		result.addGrade(type, name, mark);
 		
