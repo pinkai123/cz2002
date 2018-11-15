@@ -13,3 +13,6 @@ MARY SIEW|U0009991C|msieww@e.ntu.edu.sg
 MANGO SIM|U4445566S|ms56@e.ntu.edu.sg
 PAULO LOH|U7893345F|pl23054@ntu.edu.sg
 BRUCE WAYNE|U4561238P|fg56@e.ntu.edu.sg
+KAISIANG|U1234567A|a@ntu.edu.sg
+PETERSON|U1111111Z|jws1@ntu.edu.sg
+JERVIS HO|U1234567C|jerv@ntu.edu.sg

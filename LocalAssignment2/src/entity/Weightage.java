@@ -18,25 +18,6 @@ public class Weightage {
 		this.haveSub = haveSub;
 	}
 	
-	public static boolean verificationSubcomponentPercentage(ArrayList<Double> subPercentage) {
-		double percentage = 0;
-		for (int i = 0; i < subPercentage.size(); i ++) {
-			percentage += subPercentage.get(i);
-		}
-		if (percentage != 1)
-			return false;
-		return true;
-	}
-	
-	public static boolean verificationSubcomponentName(ArrayList<String> subcomponent, String name) {
-		for(int i= 0;i<subcomponent.size();i++) {
-			if(subcomponent.get(i).equals(name)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	// Accessors
 	public double getMainPercentage(){return mainPercentage;}
 	public double getCourseworkPercentage(){return courseworkPercentage;}

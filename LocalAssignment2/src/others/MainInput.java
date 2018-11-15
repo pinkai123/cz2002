@@ -128,7 +128,7 @@ public class MainInput {
 					case 1:
 						break;
 					default:
-						System.out.println("Invalid option");
+						System.out.println("Invalid option.");
 						cFlag = 0;
 						break;
 					}
@@ -165,9 +165,10 @@ public class MainInput {
 							System.out.println("Invalid input type.");
 							sc.next();
 							cFlag = 0;
+							continue;
 						}
 						if (labIndex <= 0 | labIndex > count[1]) {
-							System.out.println("Invalid lab index range");
+							System.out.println("Invalid lab index range.");
 							cFlag = 0;
 						}
 					} while (cFlag == 0);
@@ -183,7 +184,7 @@ public class MainInput {
 							sc.next();
 						}
 						if (tutIndex > count[0]+count[1] | tutIndex < count[1]+1) {
-							System.out.println("Invalid Tutorial index range");
+							System.out.println("Invalid Tutorial index range.");
 							cFlag = 0;
 						}
 					} while (cFlag == 0);
@@ -192,7 +193,7 @@ public class MainInput {
 				boolean changeVac = MainController.addStudentToCourse(matric, courseID, tutIndex, labIndex);
 				// Check vacancy
 				if (changeVac)
-					MainController.updateVacancy(matric, courseID, tutIndex, labIndex);
+					MainController.updateVacancy(courseID, tutIndex, labIndex);
 				break;
 			// 4. CHECK AVAILABLE SLOT IN A CLASS 
 			case 4:
@@ -209,6 +210,7 @@ public class MainInput {
 						System.out.println("Invalid input type.");
 						cFlag = 0;
 						sc.next();
+						continue;
 					}
 					if (classIndex <= 0) {
 						cFlag = 0;
@@ -378,9 +380,8 @@ public class MainInput {
 					try { 
 						haveSub = sc.nextInt();
 						if (haveSub != 0 & haveSub != 1) {
-							System.out.println("Please enter either 1 or 0 only");
+							System.out.println("Enter either 1 or 0 only.");
 							cFlag = 0;
-							sc.next();
 						}
 					}
 					catch (InputMismatchException e) {
@@ -410,6 +411,7 @@ public class MainInput {
 							cFlag = 1;
 							try { 
 								tempPercentage = sc.nextDouble();
+								sc.nextLine();
 								if ((tempPercentage <= 0 || tempPercentage >= 1 ) & tempPercentage != 2) {
 									System.out.println("Please enter from 0 - 1 (excluding 0 & 1).");
 									cFlag = 0;
@@ -421,35 +423,38 @@ public class MainInput {
 								cFlag = 0;
 							}
 						} while(cFlag == 0);
+						System.out.println("Enter the Name of the subcomponent: ");
+						name = sc.nextLine().toUpperCase();
+					// check for existing name
+						if(Subcomponent.verificationSubcomponentName(names, name)) {
+							names.add(name);
+							subPercentages.add(tempPercentage);
+							
+						}
+						else {
+							System.out.println("The Name has been taken.");
+							continue;
+						}
 						// Ensure the percentage adds to 1
-						if (tempPercentage == 2) {
-							boolean isTotal = Weightage.verificationSubcomponentPercentage(subPercentages);
-							if (isTotal == false) {
-								System.out.println("Please type in all the Subcomponent again and ensure it add up to 1");
+							int isTotal = Subcomponent.verificationSubcomponentPercentage(subPercentages);
+							if (isTotal == 1) {
+								System.out.println("Please type in all the Subcomponents again and ensure it add up to 1");
 								subPercentages = new ArrayList<Double>();
 								names = new ArrayList<String>();
 								continue;
 							}
-							for (int i = 0; i < subPercentages.size(); i ++) {
-								tempCourse.addSubcomponent(names.get(i), subPercentages.get(i));
+							else if(isTotal == -1) {
+								System.out.println("Next subcomponent.");
+								continue;
 							}
-							Database.addCourse(tempCourse);
-							System.out.println("Weightage added successfully.");
-							break;
-						}
-						System.out.println("Enter the Name of the subcomponent: ");
-						name = sc.nextLine().toUpperCase();
-						// check for existing name
-						if(Weightage.verificationSubcomponentName(names, name)) {
-							names.add(name);
-							subPercentages.add(tempPercentage);
-							System.out.println("Next subcomponent.");
-						}
-						else {
-							System.out.println("The Name has been taken");
-							continue;
-						}
-				
+							else {
+								for (int i = 0; i < subPercentages.size(); i ++) {
+									tempCourse.addSubcomponent(names.get(i), subPercentages.get(i));
+								}
+								Database.addCourse(tempCourse);
+								System.out.println("Weightage added successfully.");
+								break;
+							}
 					}
 				}
 				
@@ -470,12 +475,12 @@ public class MainInput {
 				Student tempS = Database.getStudent(matric);
 				//check whether student is in the database
 				if(tempS == null) {
-					System.out.println("Student does not exist");
+					System.out.println("Student does not exist.");
 					break;
 				}
 				//check whether the student take this course
 				if(!tempCourse.studentInCourse(tempS)) {
-					System.out.println("Student is not in course");
+					System.out.println("Student is not in course.");
 					break;
 				}
 				
@@ -492,7 +497,7 @@ public class MainInput {
 					result = new Result(tempCourse,tempS);
 				}
 				else if (result.hasSubComponentMark()) {
-					System.out.println("Result has already been inserted");
+					System.out.println("Result has already been inserted.");
 					break;
 				}
 				
@@ -518,7 +523,7 @@ public class MainInput {
 					} while (cFlag == 0);
 					
 					MainController.addResult(result, gradeType.COURSEWORK, "FULL", mark);
-					System.out.println("CourseWork mark added succesfully");
+					System.out.println("CourseWork mark added succesfully.");
 				}
 				
 				// Coursework with subcomponents
@@ -576,7 +581,7 @@ public class MainInput {
 				}
 				//check whether student take this course
 				if(!tempCourse.studentInCourse(tempS)) {
-					System.out.println("Student is not in course");
+					System.out.println("Student is not in course.");
 					break;
 				}
 				
@@ -586,7 +591,7 @@ public class MainInput {
 					result = new Result(tempCourse,tempS);
 				}
 				else if (result.hasExamMark()) {
-					System.out.println("Result has already been inserted");
+					System.out.println("Result has already been inserted.");
 					break;
 				}
 				
@@ -610,7 +615,7 @@ public class MainInput {
 				
 				// ADD TO DATABASE
 				MainController.addResult(result, gradeType.EXAM, null, mark);
-				System.out.println("Exam mark added successfully");
+				System.out.println("Exam mark added successfully.");
 				
 				
 				break;
@@ -623,7 +628,7 @@ public class MainInput {
 				// check whether course exists
 				tempCourse = Database.getCourse(courseID);
 				if (tempCourse == null) {
-					System.out.println("Course does not exists");
+					System.out.println("Course does not exists.");
 					break;
 				}
 				

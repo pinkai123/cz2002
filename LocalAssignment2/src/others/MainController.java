@@ -165,7 +165,7 @@ public class MainController {
 		return true;
 	}
 	
-	public static void updateVacancy(String matric, String courseID, int tutIndex, int labIndex) {
+	public static void updateVacancy(String courseID, int tutIndex, int labIndex) {
 		Course tempC = Database.getCourse(courseID);
 		// Decrement Vacancy
 		tempC.decrementVacancy();
