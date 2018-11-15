@@ -45,36 +45,6 @@ public class Weightage {
 		this.haveSub = haveSub;
 	}
 	
-	/**
-	 * Check whether all subcomponent in weightage adds up to 1.
-	 * @param subPercentage All the subcomponents' percentage 
-	 * @return true if subcomponents' percentage in this weightage adds up to 1
-	 */
-	public static boolean verificationSubcomponentPercentage(ArrayList<Double> subPercentage) {
-		double percentage = 0;
-		for (int i = 0; i < subPercentage.size(); i ++) {
-			percentage += subPercentage.get(i);
-		}
-		if (percentage != 1)
-			return false;
-		return true;
-	}
-	
-	/**
-	 * Check whether there a subcomponent name is the same as any of the other subcomponent.
-	 * @param subcomponent other subcomponents' name
-	 * @param name a subcomponent name
-	 * @return false if there is a match in subcomponent names
-	 */
-	public static boolean verificationSubcomponentName(ArrayList<String> subcomponent, String name) {
-		for(int i= 0;i<subcomponent.size();i++) {
-			if(subcomponent.get(i).equals(name)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	// Accessors
 	/**
 	 * Get the main component percentage in this weightage.
