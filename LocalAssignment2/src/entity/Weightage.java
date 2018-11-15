@@ -9,7 +9,6 @@ public class Weightage {
 	private double mainPercentage;
 	private double courseworkPercentage;
 	private boolean haveSub;
-	private int noSub = 0;
 	// Subcomponent objects as attribute (Composition)
 	private ArrayList<Subcomponent> subcomponent = new ArrayList<Subcomponent>();
 
@@ -19,19 +18,12 @@ public class Weightage {
 		this.haveSub = haveSub;
 	}
 	
-	public static boolean verificationOverall(double mainPercentage, double courseworkPercentage) {
-		if(mainPercentage + courseworkPercentage == 1) {
-			return true;
+	public static boolean verificationSubcomponentPercentage(ArrayList<Double> subPercentage) {
+		double percentage = 0;
+		for (int i = 0; i < subPercentage.size(); i ++) {
+			percentage += subPercentage.get(i);
 		}
-		else 
-			return false;
-	}
-	public static boolean verificationSubcomponentPercentage(ArrayList<Subcomponent> subcomponent, int noSub) {
-		int percentage = 0;
-		for(int i = 0; i < noSub;i++) {
-			percentage += ((Subcomponent) subcomponent.get(i)).getPercentage();
-			}
-		if(percentage!= 100)
+		if (percentage != 1)
 			return false;
 		return true;
 	}
@@ -48,7 +40,6 @@ public class Weightage {
 	// Accessors
 	public double getMainPercentage(){return mainPercentage;}
 	public double getCourseworkPercentage(){return courseworkPercentage;}
-	public int getNoSub(){return noSub;}
 	public boolean getHaveSub() { return haveSub;}
 	public ArrayList<Subcomponent> getSubcomponent(){
 		return subcomponent;
@@ -67,7 +58,6 @@ public class Weightage {
 	public void setSubcomponent(String name, double percentage) {
 		Subcomponent Subcomponent = new Subcomponent(name,percentage);
 		subcomponent.add(Subcomponent);
-		noSub++;
 	}
 	
 	public void printMarks(Result r) {
@@ -75,18 +65,7 @@ public class Weightage {
 		
 		for (int j = 0; j < r.getAllGrades().size(); j++) {
 			Grade g = r.getAllGrades().get(j);
-			if (Objects.equals(gradeType.EXAM, g.getType())) {
-				percentage = mainPercentage;
-				System.out.println(g.getType() + " " + g.getName() + " " + g.getMark() + " " + percentage);
-			}
-			else if (Objects.equals(gradeType.COURSEWORK, g.getType())) {
-				for (int i = 0; i < subcomponent.size(); i ++) {
-					percentage = subcomponent.get(i).getPercentage();
-					if (Objects.equals(subcomponent.get(i).getName(), g.getName())) {
-						System.out.println(g.getType() + " " + g.getName() + " " + g.getMark() + " " + percentage);
-					}
-				}
-			}
+			System.out.println(g.getType() + " " + g.getName() + " " + g.getMark());
 		}
 	}
 	
@@ -138,15 +117,20 @@ public class Weightage {
 	public double getCourseworkMark(Result r) {
 		double courseworkMark = 0;
 		boolean haveCoursework = false;
-		for (int i = 0; i < r.getAllGrades().size(); i++) {
+		for (int i = 0; i < r.getAllGrades().size(); i ++) {
 			Grade tempG = r.getAllGrades().get(i);
-			if (Objects.equals(gradeType.COURSEWORK, tempG.getType())) {
+			if (Objects.equals(tempG.getType(), gradeType.COURSEWORK)) {
+				// for no subcomponents
+				if (!haveSub) {
+					return tempG.getMark();
+				}
+				// Get weightage according to the name
 				for (int j = 0; j < subcomponent.size(); j ++) {
-					double percentage = subcomponent.get(j).getPercentage();
-					if (Objects.equals(subcomponent.get(j).getName(), tempG.getName())) {
+					String name = subcomponent.get(j).getName();
+					if (Objects.equals(tempG.getName(), name)) {
 						haveCoursework = true;
+						double percentage = subcomponent.get(j).getPercentage();
 						courseworkMark += percentage * tempG.getMark();
-						continue;
 					}
 				}
 			}

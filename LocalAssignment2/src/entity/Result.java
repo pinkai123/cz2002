@@ -3,6 +3,8 @@ package entity;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import entity.Grade.gradeType;
+
 public class Result {
 	private Course course;
 	private Student student;
@@ -36,5 +38,28 @@ public class Result {
 			return true;
 		else
 			return false;
+	}
+	
+	public boolean hasExamMark() {
+		if (allGrades.size() == 0) {
+			return false;
+		}
+		for (int i = 0 ; i < allGrades.size(); i ++) {
+			Grade tempG = allGrades.get(i);
+			if (tempG.getType() == gradeType.EXAM)
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean hasSubComponentMark() {
+		if (allGrades.size() == 0)
+			return false;
+		for (int i = 0; i < allGrades.size(); i ++) {
+			Grade tempG = allGrades.get(i);
+			if (tempG.getType() == gradeType.COURSEWORK)
+				return true;
+		}
+		return false;
 	}
 }

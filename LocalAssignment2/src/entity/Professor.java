@@ -3,29 +3,19 @@ package entity;
 import java.util.ArrayList;
 
 public class Professor extends Person{
-	// Student and result objects as attributes (Association)
-	ArrayList<Student> studentList = new ArrayList<Student>();
-	ArrayList<Result> resultList = new ArrayList<Result>();
+	// Course objects as attributes (Association)
+	ArrayList<Course> courseList = new ArrayList<Course>();
 		
 	// Constructor 
 	public Professor(String name, String matric, String email) {
 		super(name, matric, email);
 	}
 	
-	// Accessor
-	public ArrayList<Student> getStudentList() {
-		return studentList;
+	public void addCourse(Course newC) {
+		courseList.add(newC);
 	}
-	public ArrayList<Result> getResultList() {
-		return resultList;
-	}
-	
-	// Other Methods
-	public void addStudent(Student newStudent) {
-		studentList.add(newStudent);
-	}
-	public void addResult(Result newResult) {
-		resultList.add(newResult);
+	public ArrayList<Course> getCourse() {
+		return courseList;
 	}
 	
 	// Check naming convention of PROF matric is valid

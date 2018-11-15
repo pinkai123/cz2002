@@ -81,15 +81,59 @@ public class Database {
 	// Mutator
 	public static void addResult(Result newR) {
 		// Check whether new
-		result.add(newR);
+		int i;
+		boolean isExisting = false;
+		for (i = 0; i < result.size(); i ++) {
+			Result tempR = result.get(i);
+			if (Objects.equals(tempR.getStudent().getMatric(), newR.getStudent().getMatric()))
+				if (Objects.equals(tempR.getCourse().getCourseID(), newR.getCourse().getCourseID())) {
+					isExisting = true;
+					break;
+				}
+		}
+		if (isExisting) {
+			result.set(i, newR);
+		}
+		else {
+			result.add(newR);
+		}
 	}
+	
 	public static void addStudent(Student newS) {
 		// Check whether new
-		student.add(newS);
+		int i;
+		boolean isExisting = false;
+		for (i = 0; i < student.size(); i ++) {
+			Student tempS = student.get(i);
+			if (Objects.equals(newS.getMatric(),tempS.getMatric())) {
+				isExisting = true;
+				break;
+			}
+		}
+		if (isExisting) {
+			student.set(i, newS);
+		}
+		else {
+			student.add(newS);
+		}
 	}
+	
 	public static void addProfessor(Professor newP) {
-		// Check whether new
-		prof.add(newP);
+		int i; 
+		boolean isExisting = false;
+		for (i = 0; i < prof.size(); i ++) {
+			Professor tempP = prof.get(i);
+			if (Objects.equals(tempP.getMatric(), newP.getMatric())) {
+				isExisting = true;
+				break;
+			}
+		}
+		if (isExisting) {
+			prof.set(i, newP);
+		}
+		else {
+			prof.add(newP);
+		}
 	}
 	
 	public static void addCourse(Course newC) {

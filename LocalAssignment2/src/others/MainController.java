@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import entity.*;
+import entity.Grade.gradeType;
 
 public class MainController {
 	// 1. ADD A STUDENT
@@ -70,6 +71,10 @@ public class MainController {
 	
 	// Add lesson to course
 	public static void addCourse(Course tempC) {
+		Professor prof = tempC.getCourseCoordinator();
+		prof.addCourse(tempC);
+		
+		Database.addProfessor(prof);
 		Database.addCourse(tempC);
 		return;
 	}
@@ -77,13 +82,14 @@ public class MainController {
 	// Print all courses
 	public static void printAllCourse() {		
 		ArrayList<Course> courseList = Database.getAllCourse();
-		System.out.println("CourseID, CourseName, CourseCoordinatorID\n"
-				+ "########################");
+		System.out.println("############################################\n" +
+		"CourseID, CourseName, CourseCoordinatorID");
 		for (int i = 0; i < courseList.size(); i ++ ) {
 			Course course = (Course) courseList.get(i);
 			System.out.println(course.getCourseID() + "  " + course.getCourseName() + "  " 
 					+ course.getCourseCoordinator().getMatric());
 		}
+		System.out.println("############################################");
 	}
 	
 	// 3. REGISTER STUDENT FOR A COURSE
@@ -141,10 +147,15 @@ public class MainController {
 		
 		// Add objects in objects
 		tempC.addStudent(tempS);
-		Lesson lab = tempC.getLessonList().get(labIndex-1);
-		Lesson tut = tempC.getLessonList().get(tutIndex-1);
-		lab.addStudentToLesson(tempS);
-		tut.addStudentToLesson(tempS);
+		try {
+			Lesson lab = tempC.getLessonList().get(labIndex-1);
+			lab.addStudentToLesson(tempS);
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		try {
+			Lesson tut = tempC.getLessonList().get(tutIndex-1);
+			tut.addStudentToLesson(tempS);
+		} catch (ArrayIndexOutOfBoundsException e) {}
+
 		tempS.addCourse(tempC);
 		
 		// Update course
@@ -181,34 +192,52 @@ public class MainController {
 		System.out.println("Vacancy: " + tempL.getVacancy() + "/" + tempL.getTotalSize());
 	}
 	
-	// 5. 
 	
-	
-	
-	// 9. Print course statistics
+	// 9. Print course statistics	
 	// Show percentage overall, exam only, coursework only
+	
 	public static void printCourseStat(String courseID) {
-		// Get course object
+		// Check if course exists
 		Course tempC = Database.getCourse(courseID);
 		if (tempC == null) {
 			System.out.println("Course does not exist");
 			return;
 		}
+		
+		// If no student
+		if (tempC.getStudentList().size() == 0) {
+			System.out.println("No student in course.");
+			return;
+		}
+		// check if no results
+		else if (tempC.getResultList().size() == 0) {
+			System.out.println("This course has no results yet.");
+			return;
+		}
+				
 		System.out.println("Student, Overall percentage, Exam percentage, Coursework percentage");
 		System.out.println("-1 means incomplete data");
+		
 		// Get results for course and weightage
-		ArrayList<Result> resultList = tempC.getResultList();
 		Weightage w = tempC.getCourseWeightage();
-		for (int i = 0; i < resultList.size(); i ++) {
-			Result tempR = resultList.get(i);
-			double courseworkMark = w.getCourseworkMark(tempR);
-			double examMark = w.getExamMark(tempR);
-			double overallMark = w.getOverallMark(examMark, courseworkMark);
-			
-			String matric = tempR.getStudent().getMatric();
-			System.out.println("Matric: " + matric + " Overall: " + overallMark + "% Exam: " + examMark + "% Coursework: " + courseworkMark
-					+ "%");
+		ArrayList<Result> resultList = tempC.getResultList();
+		ArrayList<Student> studentList = tempC.getStudentList();
+		for (int i = 0; i < studentList.size(); i ++) {
+			for (int j = 0; j < resultList.size(); j ++) {
+				Result tempR = resultList.get(j);
+				String matric = tempR.getStudent().getMatric();
+				if (Objects.equals(studentList.get(i).getMatric(), matric)) {
+					double courseworkMark = w.getCourseworkMark(tempR);
+					double examMark = w.getExamMark(tempR);
+					double overallMark = w.getOverallMark(examMark, courseworkMark);
+					
+					System.out.println("Matric: " + matric + " Overall: " + overallMark + "% Exam: " + examMark + "% Coursework: " + courseworkMark
+							+ "%");
+					break;
+				}
+			}
 		}
+		
 	}
 	
 	public static void printCourseAnalysis(String courseID) {
@@ -218,7 +247,14 @@ public class MainController {
 			System.out.println("Course does not exist");
 			return;
 		}
-		Weightage w = tempC.getCourseWeightage();
+		
+		// check if no results
+		if (tempC.getResultList().size() == 0) {
+			System.out.println("This course has no results yet.");
+			return;
+		}
+		
+		Weightage w = tempC.getCourseWeightage();		
 		
 		// {overall, exam, coursework}
 		double[] min = {101,101,101};
@@ -307,18 +343,41 @@ public class MainController {
 			double examMark = w.getExamMark(tempR);
 			double courseworkMark = w.getCourseworkMark(tempR);
 			double overallMark = w.getOverallMark(examMark, courseworkMark);
+			System.out.println("COURSE: " + sResult.get(j).getCourse().getCourseID());
 			if (overallMark == -1) {
-				System.out.println("Unable to generate mark as courseworkMark or examMark is incomplete.");
+				System.out.println("Unable to generate overallmark as courseworkMark or examMark is incomplete.");
 			}
 			else {
 				String overallGrade = w.calculateGrade(overallMark);
-				System.out.println("Overall Marks: " + overallMark + ", Overall Grade; " + overallGrade);
+				System.out.println("Overall Marks: " + overallMark + ", Overall Grade: " + overallGrade);
 			}
 			
 			// Print results
-			System.out.println(sResult.get(j).getCourse().getCourseID());
+			System.out.println("GradeType Marks Weightage");
 			w.printMarks(tempR);
 			
 		}
+	}
+	
+	
+	// Add result 
+	public static void addResult(Result result, gradeType type, String name, double mark) {
+		result.addGrade(type, name, mark);
+		
+		// link to student
+		String matric = result.getStudent().getMatric();
+		Student tempS = Database.getStudent(matric);
+		
+		tempS.addResult(result);
+		
+		// link to course
+		String courseID = result.getCourse().getCourseID();
+		Course tempC = Database.getCourse(courseID);
+		
+		tempC.addResult(result);
+		
+		Database.addCourse(tempC);
+		Database.addResult(result);
+		Database.addStudent(tempS);
 	}
 }

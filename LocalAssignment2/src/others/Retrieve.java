@@ -125,71 +125,82 @@ public class Retrieve {
 	
 	public static int[] retrieveLabInfo(int lecVac) {
 		Scanner sc = new Scanner(System.in);
+		int cFlag = 1;
 		// int[2] = [numOfLabs, vacancy]
 		int[] info = {0,0};
+		
 		do {
+			cFlag = 1;
 			System.out.println("Enter number of labs: ");
 			try { info[0] = sc.nextInt();}
 			catch (InputMismatchException e) {
 				System.out.println("Invalid input.");
 				sc.next();
-				continue;
+				cFlag = 0;
 			}
 			if (info[0] <= 0) {
 				System.out.println("Cannot be less than 1, please reenter.");
-				continue;
+				cFlag = 0;
 			}
+		} while (cFlag == 0);
+		do {
+			cFlag = 1;
 			System.out.println("Enter vacancy for each lab: ");
 			try {info[1] = sc.nextInt();}
 			catch (InputMismatchException e) {
 				System.out.println("Invalid input.");
 				sc.next();
-				continue;
+				cFlag = 0;
 			} 
 			if (info[1] <= 0) {
 				System.out.println("Cannot be less than 1, please reenter.");
-				continue;
+				cFlag = 0;
 			}
 			else if (lecVac < info[1]) {
 				System.out.println("Each lab's vacancy cannot be more than total course vacancy, please reenter.");
-				continue;
+				cFlag = 0;
 			}
-		} while (false);
+		} while (cFlag == 0);
 		return info;
 	}
 	
 	public static int[] retrieveTutInfo(int lecVac) {
 		Scanner sc = new Scanner(System.in);
+		int cFlag;
 		// int[2] = [numOfTut, vacancy]
 		int[] info = {0,0};
 		do {
+			cFlag = 1;
 			System.out.println("Enter number of tutorial: ");
 			try { info[0] = sc.nextInt();}
 			catch (InputMismatchException e) {
 				System.out.println("Invalid input.");
 				sc.next();
-				continue;
+				cFlag = 0;
 			}
 			if (info[0] <= 0) {
 				System.out.println("Cannot be less than 1, please reenter.");
-				continue;
+				cFlag = 0;
 			}
+		} while(cFlag == 0);
+		do {
+			cFlag = 1;
 			System.out.println("Enter vacancy for each tutorial: ");
 			try {info[1] = sc.nextInt();}
 			catch (InputMismatchException e) {
 				System.out.println("Invalid input.");
 				sc.next();
-				continue;
+				cFlag = 0;
 			} 
 			if (info[1] <= 0) {
 				System.out.println("Cannot be less than 1, please reenter.");
-				continue;
+				cFlag = 0;
 			}
 			else if (lecVac < info[1]) {
 				System.out.println("Each tutorial's vacancy cannot be more than total course vacancy, please reenter.");
-				continue;
+				cFlag = 0;
 			}
-		} while (false);
+		} while (cFlag == 0);
 		return info;
 	}
 	
@@ -227,9 +238,10 @@ public class Retrieve {
 				System.out.println("Invalid input type.");
 				sc.next();
 				cFlag = 0;
+				continue;
 			}
-			if (mainPercentage > 1 | mainPercentage < 0) {
-				System.out.println("Invalid range, must be 0-1.");
+			if (mainPercentage >= 1 | mainPercentage <= 0) {
+				System.out.println("Invalid range, must be 0-1 (Excluding 0 & 1).");
 				cFlag = 0;
 			}
 			
