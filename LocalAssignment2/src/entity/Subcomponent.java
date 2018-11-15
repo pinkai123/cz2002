@@ -1,8 +1,8 @@
 package entity;
 
 public class Subcomponent {
-	double percentage;
-	String name;
+	private double percentage;
+	private String name;
 
 	public Subcomponent( String name,double percentage){
 		this.percentage = percentage;

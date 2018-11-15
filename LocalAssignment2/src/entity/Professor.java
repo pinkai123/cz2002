@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Professor extends Person{
 	// Course objects as attributes (Association)
-	ArrayList<Course> courseList = new ArrayList<Course>();
+	private ArrayList<Course> courseList = new ArrayList<Course>();
 		
 	// Constructor 
 	public Professor(String name, String matric, String email) {

@@ -1,4 +1,5 @@
-package FileIO;
+package IO;
+
 
 import java.io.IOException;
 import java.util.ArrayList;

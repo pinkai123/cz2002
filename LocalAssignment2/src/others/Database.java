@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import FileIO.CourseIO;
-import FileIO.FileIO;
-import FileIO.ProfessorIO;
-import FileIO.ResultIO;
-import FileIO.StudentIO;
+import IO.*;
 import entity.*;
 
 public class Database {
@@ -156,62 +152,64 @@ public class Database {
 			course.add(newC);
 		}
 	}
+	
 	// get Data from txt file
-	public static void getIO() {
-		FileIO IO = new CourseIO();
-		try {
-			course = IO.readData();
-		} catch (IOException e) {
-			System.out.println("No courses has been created yet.");
+		public static void getIO() {
+			FileIO IO = new CourseIO();
+			try {
+				course = IO.readData();
+			} catch (IOException e) {
+				System.out.println("No courses has been created yet.");
+			}
+			IO = new StudentIO();
+			try {
+				student = IO.readData();
+			} catch (IOException e) {
+				System.out.println("No student has being added yet.");
+			}
+			IO = new ProfessorIO();
+			try {
+				prof = IO.readData();
+			} catch (IOException e) {
+				System.out.println("No professor has being added yet.");
+			}
+			IO =  new ResultIO();
+			try {
+				result = IO.readData();
+			} catch (IOException e) {
+				System.out.println("No result has been created yet.");
+			}
 		}
-		IO = new StudentIO();
-		try {
-			student = IO.readData();
-		} catch (IOException e) {
-			System.out.println("No student has being added yet.");
+		//write data to text file
+		public static void returnIO() {
+			FileIO IO = new CourseIO();
+			try {
+				IO.saveData(course);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			IO = new StudentIO();
+			try {
+				IO.saveData(student);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			IO = new ProfessorIO();
+			try {
+				IO.saveData(prof);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			IO =  new ResultIO();
+			try {
+				IO.saveData(result);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("No result has been created.");
+			}
 		}
-		IO = new ProfessorIO();
-		try {
-			prof = IO.readData();
-		} catch (IOException e) {
-			System.out.println("No professor has being added yet.");
-		}
-		IO =  new ResultIO();
-		try {
-			result = IO.readData();
-		} catch (IOException e) {
-			System.out.println("No result has been created yet.");
-		}
-	}
-	//write data to text file
-	public static void returnIO() {
-		FileIO IO = new CourseIO();
-		try {
-			IO.saveData(course);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		IO = new StudentIO();
-		try {
-			IO.saveData(student);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		IO = new ProfessorIO();
-		try {
-			IO.saveData(prof);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		IO =  new ResultIO();
-		try {
-			IO.saveData(result);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("No result has been created.");
-		}
-	}
 }
+
