@@ -70,6 +70,9 @@ public class Course {
 	public void setResultList(ArrayList<Result> resultList){
 		this.resultList = resultList;
 	}
+	public void setLessonList(ArrayList<Lesson> LessonList){
+		this.lessonList = LessonList;
+	}
 	public void decrementVacancy() {
 		this.vacancy--;
 	}
@@ -107,9 +110,10 @@ public class Course {
 	
 	// Check whether student in course
 	public boolean studentInCourse(Student S) {
-		if (studentList.contains(S))
-			return true;
-		else
+		for( int i =0; i< studentList.size();i++) {
+			if(studentList.get(i).getName().equals(S.getName()))
+				return true;
+		}
 			return false;
 	}
 	

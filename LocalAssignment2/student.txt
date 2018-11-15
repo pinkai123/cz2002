@@ -1,3 +1,15 @@
 SARAH GOH|U1111111S|sa06@e.ntu.edu.sg
 JAMES BAY|U1234567B|james054@ntu.edu.sg
 JESSLYN CHEW|U1722206C|jchew@e.ntu.edu.sg
+JOHN LIM|U1456789G|jl90@e.ntu.edu.sg
+HANK KOH|U3456789H|hk89@ntu.edu.sg
+JAMES BOND|U17234589J|jb56@e.ntu.edu.sg
+TOMMY LIM|U17891234G|t34l@e.ntu.edu.sg
+JACOB SHINE|U90126734G|js12@ntu.edu.sg
+HAIKAL LIN|U6667774F|hl02@e.ntu.edu.sg
+WEI YANG|U4560099D|wy06@e.ntu.edu.sg
+JESSLIN HONG|U5556667C|jesslin054@ntu.edu.sg
+MARY SIEW|U0009991C|msieww@e.ntu.edu.sg
+MANGO SIM|U4445566S|ms56@e.ntu.edu.sg
+PAULO LOH|U7893345F|pl23054@ntu.edu.sg
+BRUCE WAYNE|U4561238P|fg56@e.ntu.edu.sg

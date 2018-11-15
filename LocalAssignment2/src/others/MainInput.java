@@ -11,23 +11,24 @@ import entity.Lesson.TypeOfLesson;
 public class MainInput {
 	public static void main(String[] args) {
 		// Data for testing
-		Student s1 = new Student("JESS CHEW", "U1722206C", "jchew032@e.ntu.edu.sg");
-		Student s2 = new Student("JACOB GOH", "U1234567A", "jgoh@e.ntu.edu.sg");
-		Professor p1 = new Professor("Mr Ding", "P1111111A", "123@e.ntu.edu.sg");
-		Course c1 = new Course("CZ2001", "ALGO", p1, 2);
-		c1.addLesson(1, 1, TypeOfLesson.LAB);
-		c1.addLesson(2, 2, TypeOfLesson.TUT);
+//		Student s1 = new Student("JESS CHEW", "U1722206C", "jchew032@e.ntu.edu.sg");
+//		Student s2 = new Student("JACOB GOH", "U1234567A", "jgoh@e.ntu.edu.sg");
+//		Professor p1 = new Professor("Mr Ding", "P1111111A", "123@e.ntu.edu.sg");
+//		Course c1 = new Course("CZ2001", "ALGO", p1, 2);
+//		c1.addLesson(1, 1, TypeOfLesson.LAB);
+//		c1.addLesson(2, 2, TypeOfLesson.TUT);
+//		
+//		s1.addCourse(c1);
+//		c1.addStudent(s1);
+//		c1.getLesson(1).addStudentToLesson(s1);
+//		c1.getLesson(2).addStudentToLesson(s1);
+//		
+//		Database.addCourse(c1);
+//		Database.addStudent(s2);
+//		Database.addStudent(s1);
+//		Database.addProfessor(p1);
 		
-		s1.addCourse(c1);
-		c1.addStudent(s1);
-		c1.getLesson(1).addStudentToLesson(s1);
-		c1.getLesson(2).addStudentToLesson(s1);
-		
-		Database.addCourse(c1);
-		Database.addStudent(s2);
-		Database.addStudent(s1);
-		Database.addProfessor(p1);
-		
+		Database.getIO();
 		int option = 0;
 		int cFlag = 0;
 		Scanner sc = new Scanner(System.in);
@@ -500,7 +501,7 @@ public class MainInput {
 					} while (cFlag == 0);
 					
 					MainController.addResult(result, gradeType.COURSEWORK, "FULL", mark);
-					System.out.println("Exam mark added succesfully");
+					System.out.println("CourseWork mark added succesfully");
 				}
 				
 				// Coursework with subcomponents
@@ -646,6 +647,7 @@ public class MainInput {
 			case 11:
 				// Quit application
 				System.out.println("Stopping application...");
+				Database.returnIO();
 				break;
 			default:
 				System.out.println("Invalid input.");

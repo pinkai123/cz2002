@@ -109,7 +109,7 @@ public class MainController {
 		// Check whether student has registered for course
 		for (int i = 0; i < c.getStudentList().size(); i ++) {
 			Student tempS = c.getStudentList().get(i);
-			if (Objects.equals(s, tempS)) {
+			if (s.getMatric().equals(tempS.getMatric())) {
 				System.out.println("Student already registered.");
 				return false;
 			}
@@ -150,11 +150,11 @@ public class MainController {
 		try {
 			Lesson lab = tempC.getLessonList().get(labIndex-1);
 			lab.addStudentToLesson(tempS);
-		} catch (ArrayIndexOutOfBoundsException e) {}
+		} catch (IndexOutOfBoundsException e) {}
 		try {
 			Lesson tut = tempC.getLessonList().get(tutIndex-1);
 			tut.addStudentToLesson(tempS);
-		} catch (ArrayIndexOutOfBoundsException e) {}
+		} catch (IndexOutOfBoundsException e) {}
 
 		tempS.addCourse(tempC);
 		
