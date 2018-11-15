@@ -8,6 +8,12 @@ import entity.*;
 import entity.Grade.gradeType;
 import entity.Lesson.TypeOfLesson;
 
+/**
+ * Represents the application that communicates directly to the administrator
+ * @author SS5 Group 4
+ * @version 1.0
+ * @since 2018-11-15
+ */
 public class MainInput {
 	public static void main(String[] args) {
 		
