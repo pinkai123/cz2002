@@ -150,11 +150,11 @@ public class MainController {
 		try {
 			Lesson lab = tempC.getLessonList().get(labIndex-1);
 			lab.addStudentToLesson(tempS);
-		} catch (ArrayIndexOutOfBoundsException e) {}
+		} catch (IndexOutOfBoundsException e) {}
 		try {
 			Lesson tut = tempC.getLessonList().get(tutIndex-1);
 			tut.addStudentToLesson(tempS);
-		} catch (ArrayIndexOutOfBoundsException e) {}
+		} catch (IndexOutOfBoundsException e) {}
 
 		tempS.addCourse(tempC);
 		
@@ -214,9 +214,8 @@ public class MainController {
 			System.out.println("This course has no results yet.");
 			return;
 		}
-				
-		System.out.println("Student, Overall percentage, Exam percentage, Coursework percentage");
-		System.out.println("-1 means incomplete data");
+		System.out.println("Printing course statistics");
+		System.out.println("(-1 means incomplete data)");
 		
 		// Get results for course and weightage
 		Weightage w = tempC.getCourseWeightage();
@@ -231,7 +230,7 @@ public class MainController {
 					double examMark = w.getExamMark(tempR);
 					double overallMark = w.getOverallMark(examMark, courseworkMark);
 					
-					System.out.println("Matric: " + matric + " Overall: " + overallMark + "% Exam: " + examMark + "% Coursework: " + courseworkMark
+					System.out.println("Matric: " + matric + ", Overall: " + overallMark + "%, Exam: " + examMark + "%, Coursework: " + courseworkMark
 							+ "%");
 					break;
 				}
@@ -343,6 +342,7 @@ public class MainController {
 			double examMark = w.getExamMark(tempR);
 			double courseworkMark = w.getCourseworkMark(tempR);
 			double overallMark = w.getOverallMark(examMark, courseworkMark);
+			System.out.println("Printing student transcript");
 			System.out.println("COURSE: " + sResult.get(j).getCourse().getCourseID());
 			if (overallMark == -1) {
 				System.out.println("Unable to generate overallmark as courseworkMark or examMark is incomplete.");
@@ -353,7 +353,6 @@ public class MainController {
 			}
 			
 			// Print results
-			System.out.println("GradeType Marks Weightage");
 			w.printMarks(tempR);
 			
 		}

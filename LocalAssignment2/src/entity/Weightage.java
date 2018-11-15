@@ -60,14 +60,51 @@ public class Weightage {
 		subcomponent.add(Subcomponent);
 	}
 	
-	public void printMarks(Result r) {
-		double percentage;
+	public void printMarks(Result r) { 
+		double mark;
+		double percentage = 0;
+		Subcomponent sub;
 		
-		for (int j = 0; j < r.getAllGrades().size(); j++) {
-			Grade g = r.getAllGrades().get(j);
-			System.out.println(g.getType() + " " + g.getName() + " " + g.getMark());
+		// if there are no subcomponents
+		if (!haveSub) {
+			for (int j = 0; j < r.getAllGrades().size(); j++) {
+				Grade tempG = r.getAllGrades().get(j);
+				if (Objects.equals(tempG.getType(), gradeType.EXAM)) {
+					System.out.println("EXAM, marks: " + tempG.getMark() + ", weightage: " + (mainPercentage*100) + "%");
+				}
+				else {
+					System.out.println("COURSEWORK-TOTAL, marks: "  + tempG.getMark() + ", weightage: " + (courseworkPercentage*100) + "%");
+				}
+			}
 		}
+		else {
+			for (int i = 0; i < r.getAllGrades().size(); i ++) {
+				Grade tempG = r.getAllGrades().get(i);
+				// If grade is exam
+				if (Objects.equals(tempG.getType(), gradeType.EXAM)) {
+					System.out.println("EXAM, marks: " + tempG.getMark() + ", weightage: " + (mainPercentage*100) + "%");
+				}
+				else {
+					// find the weightage according to the temG.name
+					for (int j = 0; j < subcomponent.size(); j ++) {
+						sub = subcomponent.get(j);
+						String subName = sub.getName();
+						if (Objects.equals(subName, tempG.getName())) {
+							percentage = sub.getPercentage();
+							break;
+						}
+					}
+					System.out.println(tempG.getType() + "-" + tempG.getName() + ", marks: " 
+							+ tempG.getMark() + ", weightage: " + (percentage*100) + "%");
+				}
+			}
+			
+			// Print total coursework
+			System.out.println("COURSEWORK-TOTAL, marks: "  +  getCourseworkMark(r) + ", weightage: " + (courseworkPercentage*100) + "%");
+		}
+	
 	}
+	
 	
 	public String calculateGrade(double marks) {
 		if (marks >= 90)

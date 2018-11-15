@@ -52,7 +52,7 @@ public class MainInput {
 			try {
 				option = sc.nextInt();
 			} catch (InputMismatchException e) {
-				System.out.println("Invalid input.");
+				System.out.println("Invalid input type.");
 				sc.next();
 				continue;
 			}
@@ -118,7 +118,7 @@ public class MainInput {
 					try {
 						lessonOption = sc.nextInt();
 					} catch (InputMismatchException e) {
-						System.out.println("Invalid input.");
+						System.out.println("Invalid input type.");
 						sc.next();
 						continue;
 					}
@@ -177,7 +177,12 @@ public class MainInput {
 					do {
 						cFlag = 1;
 						System.out.println("Choose Lab index: [1-" + count[1] + "] ");
-						labIndex = sc.nextInt();
+						try {labIndex = sc.nextInt();}
+						catch (InputMismatchException e) {
+							System.out.println("Invalid input type.");
+							sc.next();
+							cFlag = 0;
+						}
 						if (labIndex <= 0 | labIndex > count[1]) {
 							System.out.println("Invalid lab index range");
 							cFlag = 0;
@@ -188,7 +193,12 @@ public class MainInput {
 					do {
 						cFlag = 1;
 						System.out.println("Choose Tutorial index: ["+(count[1]+1)+"-" + (count[0]+count[1]) + "] ");
-						tutIndex = sc.nextInt();
+						try {tutIndex = sc.nextInt();}
+						catch (InputMismatchException e) {
+							System.out.println("Invalid input type.");
+							cFlag = 0;
+							sc.next();
+						}
 						if (tutIndex > count[0]+count[1] | tutIndex < count[1]+1) {
 							System.out.println("Invalid lab index range");
 							cFlag = 0;
@@ -204,14 +214,19 @@ public class MainInput {
 			// 4. CHECK AVAILABLE SLOT IN A CLASS 
 			case 4:
 				// Check available slot in a class (vacancy in a class)
-				int classIndex;
+				int classIndex = 0;
 				
 				courseID = Retrieve.retrieveCourseID();
 				
 				do {
 					cFlag = 1;
-					System.out.println("Enter Class Index: ");
-					classIndex = sc.nextInt();
+					System.out.println("Enter Tut/Lab Index: ");
+					try {classIndex = sc.nextInt();}
+					catch (InputMismatchException e) {
+						System.out.println("Invalid input type.");
+						cFlag = 0;
+						sc.next();
+					}
 					if (classIndex <= 0) {
 						cFlag = 0;
 						System.out.println("Invalid classIndex format, must be positive number.");
@@ -244,7 +259,7 @@ public class MainInput {
 					System.out.println("3 - Tutorial");
 					try {choice = sc.nextInt();}
 					catch (InputMismatchException e) {
-						System.out.println("Invalid input.");
+						System.out.println("Invalid input type.");
 						sc.next();
 						continue;
 				}
@@ -277,7 +292,17 @@ public class MainInput {
 						}
 						System.out.println();
 						System.out.println("Enter LessonID: ");
-						int lessonID = sc.nextInt();
+						int lessonID = -1;
+						do {
+							cFlag = 1;
+							try {lessonID = sc.nextInt();}
+							catch (InputMismatchException e) {
+								System.out.println("Invalid input type.");
+								cFlag = 0;
+								sc.next();
+							}
+						} while (cFlag == 0);
+						
 						// find the Lab slot
 						Lesson lesson = Database.getTutLab(tempCourse, lessonID, TypeOfLesson.LAB);
 						if(lesson == null) {
@@ -310,7 +335,17 @@ public class MainInput {
 						}
 						System.out.println();
 						System.out.println("Enter LessonID: ");
-						lessonID = sc.nextInt();
+						lessonID = -1;
+						do {
+							cFlag = 1;
+							try{lessonID = sc.nextInt();}
+							catch (InputMismatchException e) {
+								System.out.println("Invalid input type.");
+								sc.next();
+								cFlag = 0;
+							}
+						} while(cFlag == 0);
+						
 						// find the Lab slot
 						lesson = Database.getTutLab(tempCourse, lessonID, TypeOfLesson.TUT);
 						if(lesson == null) {
@@ -398,7 +433,7 @@ public class MainInput {
 								}
 							}
 							catch (InputMismatchException e) {
-								System.out.println("Invalid input type");
+								System.out.println("Invalid input type.");
 								sc.next();
 								cFlag = 0;
 							}
@@ -420,7 +455,7 @@ public class MainInput {
 							break;
 						}
 						System.out.println("Enter the Name of the subcomponent: ");
-						name = sc.next().toUpperCase();
+						name = sc.nextLine().toUpperCase();
 						// check for existing name
 						if(Weightage.verificationSubcomponentName(names, name)) {
 							names.add(name);
@@ -602,6 +637,13 @@ public class MainInput {
 				int printStatType = -1;
 				courseID = Retrieve.retrieveCourseID();
 				
+				// check whether course exists
+				tempCourse = Database.getCourse(courseID);
+				if (tempCourse == null) {
+					System.out.println("Course does not exists");
+					break;
+				}
+				
 				//check whether weightage has been added
 				tempCourse = Database.getCourse(courseID);
 				Weightage = tempCourse.getCourseWeightage();
@@ -648,7 +690,7 @@ public class MainInput {
 				System.out.println("Stopping application...");
 				break;
 			default:
-				System.out.println("Invalid input.");
+				System.out.println("Invalid input type.");
 				break;
 			}
 		} while (option != 11);
