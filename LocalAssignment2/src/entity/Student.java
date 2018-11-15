@@ -5,19 +5,19 @@ import java.util.ArrayList;
 /**
  * Represents a student enrolled in the school.
  * A student can be enrolled in many courses.
- * @author Group 4
+ * @author SS5 Group 4
  * @version 1.0
  * @since 2018-11-15
  */
 public class Student extends Person{
 	// Course and result objects as attributes (Association)
 	/**
-	 * Courses that the student have registered.
+	 * Consists of all courses that the student have registered.
 	 */
 	private ArrayList<Course> courseRegistered = new ArrayList<Course>();
 	
 	/**
-	 * All of the results of the courses the student has registered.
+	 * Contains all of the results of the courses the student has registered.
 	 */
 	private ArrayList<Result> resultList = new ArrayList<Result>();
 	
@@ -33,8 +33,8 @@ public class Student extends Person{
 	}
 	
 	/**
-	 * Gets the list of courses that the student has registered
-	 * @return list of registered courses.
+	 * Gets the list of courses that the student has registered.
+	 * @return All student's registered courses
 	 */
 	public ArrayList<Course> getCourseRegistered() {
 		return courseRegistered;
@@ -42,34 +42,32 @@ public class Student extends Person{
 	
 	/**
 	 * Gets the lists of results of the courses that the student has registered for.
-	 * @return list of results
+	 * @return All of student's results
 	 */
 	public ArrayList<Result> getCourseResult() {
 		return resultList;
 	}
 	
-	// Mutator
 	/**
-	 * Add in new course that the Student has registered for.
-	 * @param newCourse
+	 * Add in new course that the student has registered for.
+	 * @param newCourse This student's new registered course
 	 */
 	public void addCourse(Course newCourse) {
 		courseRegistered.add(newCourse);
 	}
 	
 	/**
-	 * Add in a result of the course that the Student has registered for. 
-	 * @param newResult
+	 * Add in a result of the course that the student has registered for. 
+	 * @param newResult This student's new result 
 	 */
 	public void addResult(Result newResult) {
 		resultList.add(newResult);
 	}
 	
-	// Check naming convention of STUDENT matric is valid
 	/**
-	 * Check whether the format of the matriculation number is valid
-	 * @param matric preeesdd
-	 * @return testttt
+	 * Check whether the format of the matriculation number is valid.
+	 * @param matric student's matriculation number
+	 * @return true if the format of the matriculation number is correct
 	 */
 	public static boolean isValidMatric(String matric) {
 		int lengthOfMatric = 9;
