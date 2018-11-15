@@ -9,8 +9,18 @@ import entity.Person;
 import entity.Professor;
 import entity.Student;
 
+/**
+ * Controller that retrieves input from administrator and ensure it is a valid input.
+ * @author SS5 Group 4
+ * @version 1.0
+ * @since 2018-11-15
+ */
 public class Retrieve {
-	
+	/**
+	 * Retrieves a valid student matriculation number from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid student matriculation number
+	 */
 	public static String retrieveStudentMatric() {
 		Scanner sc = new Scanner(System.in);
 		String matric;
@@ -27,6 +37,11 @@ public class Retrieve {
 		return matric;
 	}
 	
+	/**
+	 * Retrieves a valid name from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid name
+	 */
 	public static String retrieveName() {
 		Scanner sc = new Scanner(System.in);
 		String name;
@@ -44,6 +59,11 @@ public class Retrieve {
 		return name;
 	}
 	
+	/**
+	 * Retrieves a valid email from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid email
+	 */
 	public static String retrieveEmail() {
 		Scanner sc = new Scanner(System.in);
 		String email;
@@ -60,6 +80,12 @@ public class Retrieve {
 		return email;
 	}
 	
+	
+	/**
+	 * Retrieves a valid primary key of course from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid course's primary key
+	 */
 	public static String retrieveCourseID() {
 		Scanner sc = new Scanner(System.in);
 		String courseID;
@@ -76,6 +102,11 @@ public class Retrieve {
 		return courseID;
 	}
 	
+	/**
+	 * Retrieves a valid course name from administrator.
+	 * Keep asking for input until the format is correct. 
+	 * @return Valid course name
+	 */
 	public static String retrieveCourseName() {
 		Scanner sc = new Scanner(System.in);
 		String courseName;
@@ -84,6 +115,11 @@ public class Retrieve {
 		return courseName;
 	}
 	
+	/**
+	 * Retrieves valid professor matriculation number from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid professor matriculation number
+	 */
 	public static String retrieveProfMatric() {
 		Scanner sc = new Scanner(System.in);
 		String profMatric;
@@ -100,6 +136,11 @@ public class Retrieve {
 		return profMatric;
 	}
 	
+	/**
+	 * Retrieves valid vacancy from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid vacancy
+	 */
 	public static int retrieveVacancy() {
 		Scanner sc = new Scanner(System.in);
 		int vac = 0;
@@ -123,6 +164,12 @@ public class Retrieve {
 		return vac;
 	}
 	
+	/**
+	 * Retrieves valid number and vacancy of laboratories from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @param lecVac Vacancy of the whole course
+	 * @return Valid number and vacancy of laboratories
+	 */
 	public static int[] retrieveLabInfo(int lecVac) {
 		Scanner sc = new Scanner(System.in);
 		int cFlag = 1;
@@ -164,6 +211,12 @@ public class Retrieve {
 		return info;
 	}
 	
+	/**
+	 * Retrieves valid number and vacancy of tutorial from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @param lecVac Vacancy of the whole course
+	 * @return Valid number and vacancy of tutorials
+	 */
 	public static int[] retrieveTutInfo(int lecVac) {
 		Scanner sc = new Scanner(System.in);
 		int cFlag;
@@ -204,6 +257,11 @@ public class Retrieve {
 		return info;
 	}
 	
+	/**
+	 * Retrieves valid lesson primary key from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid lesson primary key
+	 */
 	public static int retrieveLessonIndex() {
 		Scanner sc = new Scanner(System.in);
 		int index = 0;
@@ -226,6 +284,11 @@ public class Retrieve {
 		return index;
 	}
 	
+	/**
+	 * Retrieves valid main component percentage from administrator.
+	 * Keep asking for input until the format is correct.
+	 * @return Valid main component percentage.
+	 */
 	public static double retrieveMainPercentage() {
 		Scanner sc = new Scanner(System.in);
 		int cFlag = 0;
