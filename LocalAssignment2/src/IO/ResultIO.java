@@ -10,10 +10,19 @@ import entity.Grade.gradeType;
 import entity.Lesson.TypeOfLesson;
 
 public class ResultIO extends FileIO {
+	/**
+	 * @param Seperator to separate each variable in the text file
+	 */
 	public static final String SEPARATOR = "|";
+	/**
+	 * @param name of the file
+	 */
 	protected String fileName = "result.txt";
 
-    // an example of reading
+	/**
+	 * construct list of result from text file
+	 * @return list of result
+	 */
 	public ArrayList readData() throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);	
@@ -39,7 +48,10 @@ public class ResultIO extends FileIO {
 			return AllResults ;
 	}
 
-  // an example of saving
+	/**
+	 * @param al list of Result
+	 * void save the list of result into a text file
+	 */
 	public void saveData(ArrayList al) throws IOException {
 		ArrayList alw = new ArrayList() ;// to store TutLabs data
 

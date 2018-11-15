@@ -1,6 +1,5 @@
 package IO;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -9,10 +8,19 @@ import entity.*;
 import others.*;
 
 public class StudentIO extends FileIO {
+	/**
+	 * @param Seperator to separate each variable in the text file
+	 */
 	public static final String SEPARATOR = "|";
+	/**
+	 * @param name of the file
+	 */
 	protected String fileName = "student.txt";
 
-    // an example of reading
+	/**
+	 * construct list of student from text file
+	 * @return list of student
+	 */
 	public ArrayList readData() throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
@@ -36,7 +44,10 @@ public class StudentIO extends FileIO {
 			return alr ;
 	}
 
-	// an example of saving
+	/**
+	 * @param al list of Student
+	 * void save the list of student into a text file
+	 */
 	public void saveData(ArrayList al) throws IOException {
 		ArrayList alw = new ArrayList() ;// to store Students data
 

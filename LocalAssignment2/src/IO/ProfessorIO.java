@@ -9,10 +9,18 @@ import entity.*;
 import others.*;
 
 public class ProfessorIO extends FileIO {
+	/**
+	 * @param Seperator to separate each variable in the text file
+	 */
 	public static final String SEPARATOR = "|";
+	/**
+	 * @param name of the file
+	 */
 	protected String fileName = "professor.txt";
-	
-    // an example of reading
+	/**
+	 * construct list of professor from text file
+	 * @return list of professor
+	 */
 	public ArrayList readData() throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read(fileName);
@@ -36,7 +44,10 @@ public class ProfessorIO extends FileIO {
 			return alr ;
 	}
 
-  // an example of saving
+		/**
+		 * @param al list of Professor
+		 * void save the list of professors into a text file
+		 */
 public void saveData(ArrayList al) throws IOException {
 		ArrayList alw = new ArrayList() ;// to store Professors data
 

@@ -10,29 +10,11 @@ import entity.Lesson.TypeOfLesson;
 
 public class MainInput {
 	public static void main(String[] args) {
-		// Data for testing
-//		Student s1 = new Student("JESS CHEW", "U1722206C", "jchew032@e.ntu.edu.sg");
-//		Student s2 = new Student("JACOB GOH", "U1234567A", "jgoh@e.ntu.edu.sg");
-//		Professor p1 = new Professor("Mr Ding", "P1111111A", "123@e.ntu.edu.sg");
-//		Course c1 = new Course("CZ2001", "ALGO", p1, 2);
-//		c1.addLesson(1, 1, TypeOfLesson.LAB);
-//		c1.addLesson(2, 2, TypeOfLesson.TUT);
-//		
-//		s1.addCourse(c1);
-//		c1.addStudent(s1);
-//		c1.getLesson(1).addStudentToLesson(s1);
-//		c1.getLesson(2).addStudentToLesson(s1);
-//		
-//		Database.addCourse(c1);
-//		Database.addStudent(s2);
-//		Database.addStudent(s1);
-//		Database.addProfessor(p1);
 		
 		Database.getIO();
 		int option = 0;
 		int cFlag = 0;
 		Scanner sc = new Scanner(System.in);
-		// MainController mainC = new MainController();
 		
 		System.out.println("STUDENT COURSE REGIRSTRATION AND MARK ENTRY Application");		
 		do {
@@ -201,7 +183,7 @@ public class MainInput {
 							sc.next();
 						}
 						if (tutIndex > count[0]+count[1] | tutIndex < count[1]+1) {
-							System.out.println("Invalid lab index range");
+							System.out.println("Invalid Tutorial index range");
 							cFlag = 0;
 						}
 					} while (cFlag == 0);
@@ -390,7 +372,7 @@ public class MainInput {
 				
 				double mainPercentage = Retrieve.retrieveMainPercentage();
 				double courseworkPercentage = (double)1 - mainPercentage;
-				System.out.println("Please enter 1 if you have Subcomponent or 0 if you have none");
+				System.out.println("Please enter 0 for single Subcomponent or 1 for multiple");
 				do {
 					cFlag = 1;
 					try { 
@@ -423,7 +405,7 @@ public class MainInput {
 					ArrayList<String> names = new ArrayList<String>();
 					double tempPercentage = -1;
 					while (true) {
-						System.out.println("Enter the Percentage of subcomponent(2 to end): ");
+						System.out.println("Enter the Percentage of respective subcomponents(Totals to 1): ");
 						do {
 							cFlag = 1;
 							try { 
@@ -452,7 +434,7 @@ public class MainInput {
 								tempCourse.addSubcomponent(names.get(i), subPercentages.get(i));
 							}
 							Database.addCourse(tempCourse);
-							System.out.println("Weightage add successfully.");
+							System.out.println("Weightage added successfully.");
 							break;
 						}
 						System.out.println("Enter the Name of the subcomponent: ");

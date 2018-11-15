@@ -10,12 +10,20 @@ import entity.Lesson.TypeOfLesson;
 import others.*;
 
 public class CourseIO extends FileIO {
+	/**
+	 * @param Seperator to separate each variable in the text file
+	 */
 	public static final String SEPARATOR = "|";
+	/**
+	 * @param name of the file name
+	 */
 	protected String fileName = "course.txt";
-
-    // an example of reading
+	/**
+	 * construct courses from course text file
+	 * @return list of courses
+	 */
 	public ArrayList readData() throws IOException {
-		// read String from text file
+
 		ArrayList stringArray = (ArrayList)read(fileName);
 		ArrayList alr = new ArrayList() ;// to store TutLabs data
 		
@@ -83,9 +91,7 @@ public class CourseIO extends FileIO {
 					}
 					step++;
 				}
-				// changed to 4 ///////////////////////
 				if( step == 4) {
-					// Change this to OO
 					Course = new Course(CourseID,CourseName,CourseCoordinator,Vacancy);
 					if(Lessons!= null) {
 						Course.setLessonList(Lessons);
@@ -107,7 +113,10 @@ public class CourseIO extends FileIO {
         return alr ;
 	}
 
-  // an example of saving
+		/**
+		 * @param al list of Course
+		 * void save the list of courses into a text file
+		 */
 public void saveData(ArrayList al) throws IOException {
 		ArrayList alw = new ArrayList() ;// to store TutLabs data
 

@@ -4,8 +4,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import entity.*;
-
+/**
+ * 
+ * @author Kai Siang
+ *
+ */
 public class Translation {
+	/**
+	 * 
+	 * @param StudentName list of student name
+	 * @return list of student object
+	 * @throws IOException unable read the student file
+	 */
 	public static  ArrayList StringtoStudents(ArrayList StudentName) throws IOException {
 		ArrayList<Student> Cohort  = new ArrayList();
 		ArrayList<Student> Final  = new ArrayList();
@@ -20,6 +30,12 @@ public class Translation {
 		}
 		return Final;
 	}
+	/**
+	 * 
+	 * @param Course CourseID
+	 * @return Course object
+	 * @throws IOException unable read the Course text file
+	 */
 	public static Course StringtoCourse(String Course) throws IOException {
 		ArrayList<Course> Courses  = new ArrayList();
 		FileIO IO = new CourseIO();
@@ -30,6 +46,12 @@ public class Translation {
 		}
 		return null;
 	}
+	/**
+	 * 
+	 * @param StudentName Name of Student
+	 * @return Student object
+	 * @throws IOException unable to read the student text file
+	 */
 	public static Student StringtoStudent(String StudentName) throws IOException {
 		ArrayList<Student> Students  = new ArrayList();
 		FileIO IO = new StudentIO();
@@ -40,6 +62,12 @@ public class Translation {
 		}
 		return null;
 	}
+	/**
+	 * 
+	 * @param Matric Matriculation Number Primary Key
+	 * @return Student object
+	 * @throws IOException unable to read student file
+	 */
 	public static Student MatrictoStudent(String Matric) throws IOException {
 		ArrayList<Student> Students  = new ArrayList();
 		FileIO IO = new StudentIO();
